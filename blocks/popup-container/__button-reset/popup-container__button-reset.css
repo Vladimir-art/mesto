@@ -13,3 +13,10 @@
   opacity: .6;
   transition: .2s ease-in-out;
 }
+
+@media screen and (max-width: 1023px) and (min-width: 320px) {
+  .popup-container__button-reset {
+    bottom: 99%;
+    left: 89%;
+  }
+}
