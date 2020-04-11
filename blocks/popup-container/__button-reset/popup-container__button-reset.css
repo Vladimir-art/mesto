@@ -1,0 +1,15 @@
+.popup-container__button-reset {
+  position: absolute;
+  bottom: 96%;
+  left: 98%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+.popup-container__button-reset:hover {
+  cursor: pointer;
+  opacity: .6;
+  transition: .2s ease-in-out;
+}
