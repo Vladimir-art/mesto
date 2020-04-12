@@ -1,6 +1,6 @@
 .profile__author {
   margin: 0;
-  font-family: "Inter";
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 42px;
@@ -9,9 +9,6 @@
 
 @media screen and (max-width: 1023px) and (min-width: 320px) {
   .profile__author {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 500;
     font-size: 27px;
     line-height: 56px;
     text-align: center;

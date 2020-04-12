@@ -2,7 +2,7 @@
   max-width: 358px;
   margin: 34px auto 54px;
   color: #000;
-  font-family: "Inter";
+  font-family: "Inter", Arial, sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
@@ -13,6 +13,6 @@
 @media screen and (max-width: 1023px) and (min-width: 320px) {
   .popup-container__text {
     max-width: 260px;
-    margin: 34px auto 42px;
+    margin: 20px auto 20px;
   }
 }
