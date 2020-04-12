@@ -23,8 +23,8 @@ function formSubmitHandler (evt) {
     let nameInput = content.querySelector('.popup-container__author');
     let jobInput = content.querySelector('.popup-container__aboutYourself');
 
-    nameInput.setAttribute('value', nameInput.placeholder);
-    jobInput.setAttribute('value', jobInput.placeholder);
+    nameInput.getAttribute('value');
+    jobInput.getAttribute('value');
 
     let profileAuthor = content.querySelector('.profile__author');
     let profileSpecialty = content.querySelector('.profile__specialty');
@@ -33,7 +33,6 @@ function formSubmitHandler (evt) {
     profileSpecialty.textContent = jobInput.value;
 
     addButton.addEventListener('click', resetForm);
-
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
