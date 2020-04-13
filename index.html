@@ -20,30 +20,12 @@
           <div class="profile__info">
             <div class="profile__reg">
               <h1 class="profile__author">Жак-Ив Кусто</h1>
-              <button class="profile__button-edit">
-                <img class="profile__button" src="./images/button-edit.svg" alt="Иконка-редактировать">
-              </button>
+              <button class="profile__button-edit" type="button"></button>
             </div>
             <p class="profile__specialty">Исследователь океана</p>
         </div>
         </div>
-        <button class="profile__button-add">
-          <img class="profile__plus" src="./images/button-add.svg" alt="Иконка-добавить">
-        </button>
-      </section>
-
-      <section class="popup">
-        <form class="popup-container">
-          <h2 class="popup-container__text">Редактировать профиль</h2>
-          <fieldset class="popup-container__info">
-            <input class="popup-container__author" type="text" value="Жак-Ив Кусто">
-            <input class="popup-container__aboutYourself" type="text" value="Исследователь океана">
-            <button class="popup-container__button-add">Сохранить</button>
-          </fieldset>
-          <button class="popup-container__button-reset">
-            <img class="popup-container__image" src="./images/icon-close.svg" alt="Иконка-закрыть">
-          </button>
-        </form>
+        <button class="profile__button-add" type="button"></button>
       </section>
 
       <section class="elements">
@@ -51,44 +33,70 @@
           <img class="element__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
           <div class="element__places">
             <h2 class="element__place">Карачаевск</h2>
-            <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            <button class="element__button" type="button">
+              <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            </button>
           </div>
         </div>
         <div class="element">
           <img class="element__image" src="./images/elbrus.jpg" alt="Гора-Эльбрус">
           <div class="element__places">
             <h2 class="element__place">Гора Эльбрус</h2>
-            <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            <button class="element__button" type="button">
+              <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            </button>
           </div>
         </div>
         <div class="element">
           <img class="element__image" src="./images/dombai.jpg" alt="Гора-Домбай">
           <div class="element__places">
             <h2 class="element__place">Домбай</h2>
-            <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            <button class="element__button" type="button">
+              <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            </button>
           </div>
         </div>
         <div class="element">
           <img class="element__image" src="./images/elbrus.jpg" alt="Гора-Эльбрус">
           <div class="element__places">
             <h2 class="element__place">Гора Эльбрус</h2>
-            <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            <button class="element__button" type="button">
+              <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            </button>
           </div>
         </div>
         <div class="element">
           <img class="element__image" src="./images/dombai.jpg" alt="Гора-Домбай">
           <div class="element__places">
             <h2 class="element__place">Домбай</h2>
-            <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            <button class="element__button" type="button">
+              <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            </button>
           </div>
         </div>
         <div class="element">
           <img class="element__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
           <div class="element__places">
             <h2 class="element__place">Карачево-Черкесская Республика</h2>
-            <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            <button class="element__button" type="button">
+              <img class="element__like" src="./images/heart-logo.svg" alt="Лайк">
+            </button>
           </div>
         </div>
+      </section>
+
+      <section class="popup">
+        <form class="popup-container" name="form" method="POST" action="#">
+          <h2 class="popup-container__text">Редактировать профиль</h2>
+          <fieldset class="popup-container__info">
+            <input class="popup-container__infoForm popup-container__infoForm_author" name="author" type="text" value="Жак-Ив Кусто" placeholder="Жак-Ив Кусто" required>
+            <input class="popup-container__infoForm popup-container__infoForm_aboutYourself" name="job" type="text" value="Исследователь океана" placeholder="Исследователь океана" required>
+            <button class="popup-container__button-add" type="submit">Сохранить</button>
+          </fieldset>
+          <button class="popup-container__button-reset" type="reset">
+            <img class="popup-container__image" src="./images/icon-close.svg" alt="Иконка-закрыть">
+          </button>
+        </form>
       </section>
     </main>
     <footer class="footer">

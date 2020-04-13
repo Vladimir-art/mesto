@@ -6,10 +6,11 @@
   color: #fff;
   margin-bottom: 35px;
   border: 0;
+  border-radius: 2px;
 }
 
 .popup-container__button-add:hover {
   cursor: pointer;
-  opacity: .8;
+  background-color: rgba(0, 0, 0, 0.8);
   transition: .2s ease-in-out;
 }
