@@ -89,11 +89,11 @@
         <form class="popup-container" name="form" method="POST" action="#">
           <h2 class="popup-container__text">Редактировать профиль</h2>
           <fieldset class="popup-container__info">
-            <input class="popup-container__infoForm popup-container__infoForm_author" name="author" type="text" value="Жак-Ив Кусто" placeholder="Жак-Ив Кусто" required>
-            <input class="popup-container__infoForm popup-container__infoForm_aboutYourself" name="job" type="text" value="Исследователь океана" placeholder="Исследователь океана" required>
+            <input class="popup-container__infoForm popup-container__infoform_author" name="author" type="text" placeholder="Автор" required>
+            <input class="popup-container__infoForm popup-container__infoform_aboutyourself" name="job" type="text" placeholder="О себе" required>
             <button class="popup-container__button-add" type="submit">Сохранить</button>
           </fieldset>
-          <button class="popup-container__button-reset" type="reset">
+          <button class="popup-container__button-reset" type="reset" aria-label="Close">
             <img class="popup-container__image" src="./images/icon-close.svg" alt="Иконка-закрыть">
           </button>
         </form>
