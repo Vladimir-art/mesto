@@ -3,7 +3,7 @@ const editButton = content.querySelector('.profile__button-edit'); //кнопк�
 const resetButtons = content.querySelectorAll('.popup-container__button-reset'); // выбираем все кнопки закрыть
 const popup = content.querySelectorAll('.popup'); //выбираем все попапы в секциях
 const arrayPopup = Array.from(popup); //создаем массив попапов
-const formElement = content.querySelector('.popup-container'); //контейнер внутри попапа
+const formElement = content.querySelectorAll('.popup-container'); //псевдомассив контейнеров внутри попапа
 const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
 const elements = content.querySelector('.elements');
 const initialCards = [        //массив для добавления карточек мест
@@ -71,6 +71,23 @@ function addPlace (arrayPlaces) {  //фнкция добавления карт�
    })
 }
 
+//функция добавления новых карточек на страницу
+function formSubmitPlace (evt) {
+  evt.preventDefault();
+
+  let placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
+  let placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
+  const placeTemplate = document.querySelector('.element__template').content; //находим template в HTML
+  const placeElement = placeTemplate.cloneNode(true); //клонируем все дочерние элементы template
+  placeElement.querySelector('.element__image').setAttribute('src', `${placeLink.value}`); //добавляем ссылку для изображения
+  placeElement.querySelector('.element__place').textContent = placeName.value; //добавляем текст
+
+  elements.prepend(placeElement); //добавляем карточку в начало секции
+  placeName.value = ''; //обнуляем
+  placeLink.value = ''; //значения форм
+  resetForm (); //закрываем форму
+}
+
 function resetForm () {  //функция закрытия попапа
     //проходим по каждому элементу с классом .popup
   arrayPopup.forEach(function(elem, i) {
@@ -79,17 +96,20 @@ function resetForm () {  //функция закрытия попапа
     }
   })
 };
-
+//при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
-
+//кнопка-закрыть на всех попапах
 resetButtons.forEach(function(elem, i) {
   resetButtons[i].addEventListener('click', resetForm);
 });
-
-formElement.addEventListener('submit', formSubmitHandler);
-
+//открыть форму добавления новой карточки
 addButton.addEventListener('click', function (){
   arrayPopup[1].classList.add('popup_opened');
 });
-
+//сохранения на сайте разных форм
+formElement.forEach(function() {
+  formElement[0].addEventListener('submit', formSubmitHandler); //сохранить имя и деятельность автора
+  formElement[1].addEventListener('submit', formSubmitPlace); //сохранить новые карточки
+});
+//добвление стандартных карточек при открытии страницы
 addPlace(initialCards);
