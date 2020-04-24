@@ -2,10 +2,13 @@
 @import url(./__places/element__places.css);
 @import url(./__place/element__place.css);
 @import url(./__button/element__button.css);
-@import url(./__like/element__like.css);
+@import url(./__trash/element__trash.css);
 
 .element {
   max-width: 282px;
   background-color: #fff;
   border-radius: 10px;
+  position: relative;
 }
+
+
