@@ -3,9 +3,10 @@ const editButton = content.querySelector('.profile__button-edit'); //кнопк�
 const resetButtons = content.querySelectorAll('.popup-container__button-reset'); // выбираем все кнопки закрыть
 const popup = content.querySelectorAll('.popup'); //выбираем все попапы в секциях
 const arrayPopup = Array.from(popup); //создаем массив попапов
-const formElement = content.querySelectorAll('.popup-container'); //псевдомассив контейнеров внутри попапа
+const formElements = content.querySelectorAll('.popup-container'); //псевдомассив контейнеров внутри попапа
 const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
 const elements = content.querySelector('.elements');
+// const trash = content.querySelector('.element__trash');
 const initialCards = [        //массив для добавления карточек мест
   {
       name: 'Архыз',
@@ -66,7 +67,14 @@ function addPlace (arrayPlaces) {  //фнкция добавления карт�
     const placeElement = placeTemplate.cloneNode(true);  //при каждой итерации клонируем все дочерние элементы template
     placeElement.querySelector('.element__image').setAttribute('src', `${arrayPlaces[position].link}`); //добавляем ссылку для изображения
     placeElement.querySelector('.element__place').textContent = arrayPlaces[position].name; //добавляем текст
-
+    //функция чтоб ставить лайки карточкам
+    placeElement.querySelector('.element__button').addEventListener('click', function(evt) {
+      evt.target.classList.toggle('element__button_like-active');
+    })
+    //функция удаления карточек
+    placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
+      evt.target.parentElement.classList.add('element_delete');
+    })
     elements.append(placeElement); //добавляем карточки на страницу для секции elements
    })
 }
@@ -81,7 +89,14 @@ function formSubmitPlace (evt) {
   const placeElement = placeTemplate.cloneNode(true); //клонируем все дочерние элементы template
   placeElement.querySelector('.element__image').setAttribute('src', `${placeLink.value}`); //добавляем ссылку для изображения
   placeElement.querySelector('.element__place').textContent = placeName.value; //добавляем текст
-
+  //функция чтоб ставить лайки карточкам
+  placeElement.querySelector('.element__button').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('element__button_like-active');
+  })
+  //функция удаления карточек
+  placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
+    evt.target.parentElement.classList.add('element_delete');
+  })
   elements.prepend(placeElement); //добавляем карточку в начало секции
   placeName.value = ''; //обнуляем
   placeLink.value = ''; //значения форм
@@ -96,6 +111,7 @@ function resetForm () {  //функция закрытия попапа
     }
   })
 };
+
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
 //кнопка-закрыть на всех попапах
@@ -107,9 +123,16 @@ addButton.addEventListener('click', function (){
   arrayPopup[1].classList.add('popup_opened');
 });
 //сохранения на сайте разных форм
-formElement.forEach(function() {
-  formElement[0].addEventListener('submit', formSubmitHandler); //сохранить имя и деятельность автора
-  formElement[1].addEventListener('submit', formSubmitPlace); //сохранить новые карточки
+formElements.forEach(function(elem, item) {
+  switch (item) {
+    case 0:
+      formElements[item].addEventListener('submit', formSubmitHandler); //сохранить имя и деятельность автора
+      break;
+    case 1:
+      formElements[item].addEventListener('submit', formSubmitPlace); //сохранить новые карточки
+      break;
+    };
 });
-//добвление стандартных карточек при открытии страницы
+//добавление карточек при загрузке страницы
 addPlace(initialCards);
+

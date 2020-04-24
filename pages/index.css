@@ -9,6 +9,7 @@
 @import url(../blocks/popup-container/popup-container.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
+@import url(../blocks/element/_delete/element_delete.css);
 @import url(../blocks/footer/footer.css);
 
 /* *, button {
