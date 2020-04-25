@@ -7,6 +7,7 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup-container/popup-container.css);
+@import url(../blocks/popup-image/popup-image.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/_delete/element_delete.css);
@@ -14,4 +15,6 @@
 
 /* *, button {
   border: 1px solid red;
+  background-color: ;
+  hei
 } */

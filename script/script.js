@@ -45,7 +45,7 @@ function editForm () {  //функция для открытия попапа-р
   nameInput.value = profileAuthor.textContent;
   jobInput.value = profileSpecialty.textContent;
 }
-
+//функция для внесения данных об аторе
 function formSubmitHandler (evt) {
     evt.preventDefault();
     // выбираем поля формы
@@ -59,8 +59,8 @@ function formSubmitHandler (evt) {
 
     resetForm();
 }
-
-function addPlace (arrayPlaces) {  //фнкция добавления карточек на страницу
+//фнкция добавления карточек на страницу
+function addPlace (arrayPlaces) {
   const placeTemplate = document.querySelector('.element__template').content;  //находим template в HTML
   //проходим по каждому элементу массива
   arrayPlaces.forEach(function(element, position) {
@@ -75,6 +75,12 @@ function addPlace (arrayPlaces) {  //фнкция добавления карт�
     placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
       evt.target.parentElement.classList.add('element_delete');
     })
+    //функция открытия попапа с картинкой
+    placeElement.querySelector('.element__image').addEventListener('click', function(evt) {
+      arrayPopup[2].classList.add('popup_opened');
+      content.querySelector('.popup-image__picture').setAttribute('src', evt.target.src);
+      content.querySelector('.popup-image__caption').textContent = arrayPlaces[position].name;
+    })
     elements.append(placeElement); //добавляем карточки на страницу для секции elements
    })
 }
@@ -83,12 +89,13 @@ function addPlace (arrayPlaces) {  //фнкция добавления карт�
 function formSubmitPlace (evt) {
   evt.preventDefault();
 
-  let placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
-  let placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
+  const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
+  const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
   const placeTemplate = document.querySelector('.element__template').content; //находим template в HTML
   const placeElement = placeTemplate.cloneNode(true); //клонируем все дочерние элементы template
+  const elementPlace = placeElement.querySelector('.element__place');
+  elementPlace.textContent = placeName.value; //добавляем текст
   placeElement.querySelector('.element__image').setAttribute('src', `${placeLink.value}`); //добавляем ссылку для изображения
-  placeElement.querySelector('.element__place').textContent = placeName.value; //добавляем текст
   //функция чтоб ставить лайки карточкам
   placeElement.querySelector('.element__button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__button_like-active');
@@ -97,13 +104,21 @@ function formSubmitPlace (evt) {
   placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
     evt.target.parentElement.classList.add('element_delete');
   })
+  //функция открытия попапа с картинкой
+  placeElement.querySelector('.element__image').addEventListener('click', function(evt) {
+    arrayPopup[2].classList.add('popup_opened');
+    content.querySelector('.popup-image__picture').setAttribute('src', evt.target.src);
+    content.querySelector('.popup-image__caption').textContent = elementPlace.textContent;
+    console.log(placeName.value);
+  })
   elements.prepend(placeElement); //добавляем карточку в начало секции
   placeName.value = ''; //обнуляем
   placeLink.value = ''; //значения форм
   resetForm (); //закрываем форму
 }
 
-function resetForm () {  //функция закрытия попапа
+//функция закрытия попапа
+function resetForm () {
     //проходим по каждому элементу с классом .popup
   arrayPopup.forEach(function(elem, i) {
     if (arrayPopup[i].classList.contains('popup_opened')) {
@@ -111,6 +126,7 @@ function resetForm () {  //функция закрытия попапа
     }
   })
 };
+
 
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
@@ -135,4 +151,3 @@ formElements.forEach(function(elem, item) {
 });
 //добавление карточек при загрузке страницы
 addPlace(initialCards);
-

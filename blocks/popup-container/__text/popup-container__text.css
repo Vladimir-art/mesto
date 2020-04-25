@@ -12,7 +12,9 @@
 
 @media screen and (max-width: 1023px) and (min-width: 320px) {
   .popup-container__text {
-    max-width: 260px;
-    margin: 20px auto 20px;
+    max-width: 185px;
+    margin: 28px auto 31px;
+    font-size: 18px;
+    line-height: 22px;
   }
 }
