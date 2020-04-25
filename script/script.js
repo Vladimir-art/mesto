@@ -6,7 +6,6 @@ const arrayPopup = Array.from(popup); //создаем массив попапо
 const formElements = content.querySelectorAll('.popup-container'); //псевдомассив контейнеров внутри попапа
 const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
 const elements = content.querySelector('.elements');
-// const trash = content.querySelector('.element__trash');
 const initialCards = [        //массив для добавления карточек мест
   {
       name: 'Архыз',
@@ -59,7 +58,7 @@ function formSubmitHandler (evt) {
 
     resetForm();
 }
-//фнкция добавления карточек на страницу
+//фнкция добавления карточек на страницу и манипуляций с ними
 function addPlace (arrayPlaces) {
   const placeTemplate = document.querySelector('.element__template').content;  //находим template в HTML
   //проходим по каждому элементу массива
@@ -85,7 +84,7 @@ function addPlace (arrayPlaces) {
    })
 }
 
-//функция добавления новых карточек на страницу
+//функция добавления новых карточек на страницу и манипуляций с ними
 function formSubmitPlace (evt) {
   evt.preventDefault();
 
@@ -126,7 +125,6 @@ function resetForm () {
     }
   })
 };
-
 
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
