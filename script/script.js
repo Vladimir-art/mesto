@@ -13,7 +13,6 @@ const nameInput = content.querySelector('.popup-container__infoform_author'); //
 const jobInput = content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
 const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
 const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
-// let placeElement; //определяем переменную для дочерних элементов template
 const initialCards = [        //массив для добавления карточек мест
   {
       name: 'Архыз',
