@@ -13,7 +13,7 @@ const nameInput = content.querySelector('.popup-container__infoform_author'); //
 const jobInput = content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
 const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
 const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
-let placeElement; //определяем переменную для дочерних элементов template
+// let placeElement; //определяем переменную для дочерних элементов template
 const initialCards = [        //массив для добавления карточек мест
   {
       name: 'Архыз',
@@ -67,68 +67,46 @@ function formSubmitHandler (evt) {
 
     closeForm(popupEditForm);
 }
+
 //функция создания карточки
-function createCard () {
+function createCard (name, link) {
   const placeTemplate = document.querySelector('.element__template').content;
-  placeElement = placeTemplate.cloneNode(true);
-}
-
-//фнкция добавления карточек на страницу и манипуляций с ними
-function addPlace (arrayPlaces) {
-    //находим template в HTML
-  //проходим по каждому элементу массива
-  arrayPlaces.forEach(function(element, position) {
-    createCard ();  //при каждой итерации клонируем все дочерние элементы template
-    placeElement.querySelector('.element__image').setAttribute('src', `${arrayPlaces[position].link}`); //добавляем ссылку для изображения
-    placeElement.querySelector('.element__place').textContent = arrayPlaces[position].name; //добавляем текст
-    //функция чтоб ставить лайки карточкам
-    placeElement.querySelector('.element__button').addEventListener('click', function(evt) {
-      evt.target.classList.toggle('element__button_like-active');
-    })
-    //функция удаления карточек
-    placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
-      evt.target.parentElement.classList.add('element_delete');
-    })
-    //функция открытия попапа с картинкой
-    placeElement.querySelector('.element__image').addEventListener('click', function(evt) {
-      openForm(popupShowImage);
-      content.querySelector('.popup-image__picture').setAttribute('src', evt.target.src);
-      content.querySelector('.popup-image__caption').textContent = arrayPlaces[position].name;
-    })
-    elements.append(placeElement); //добавляем карточки на страницу для секции elements
-   })
-}
-
-//функция добавления новых карточек на страницу и манипуляций с ними
-function formSubmitPlace (evt) {
-  evt.preventDefault();
-
-  createCard (); //клонируем все дочерние элементы template
-  const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
-  const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
-  const elementPlace = placeElement.querySelector('.element__place');
-  elementPlace.textContent = placeName.value; //добавляем текст
-  placeElement.querySelector('.element__image').setAttribute('src', `${placeLink.value}`); //добавляем ссылку для изображения
+  const placeElement = placeTemplate.cloneNode(true);
+  placeElement.querySelector('.element__image').setAttribute('src', link); //добавляем ссылку для изображения
+  placeElement.querySelector('.element__place').textContent = name; //добавляем текст
   //функция чтоб ставить лайки карточкам
   placeElement.querySelector('.element__button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__button_like-active');
   })
   //функция удаления карточек
   placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
-    evt.target.parentElement.classList.add('element_delete');
+    evt.target.closest('.element').remove();
   })
   //функция открытия попапа с картинкой
   placeElement.querySelector('.element__image').addEventListener('click', function(evt) {
     openForm(popupShowImage);
     content.querySelector('.popup-image__picture').setAttribute('src', evt.target.src);
-    content.querySelector('.popup-image__caption').textContent = elementPlace.textContent;
+    content.querySelector('.popup-image__caption').textContent = name;
   })
-  elements.prepend(placeElement); //добавляем карточку в начало секции
-  placeName.value = ''; //обнуляем
-  placeLink.value = ''; //значения форм
-  closeForm (popupAddPlace); //закрываем форму
+  return placeElement;
 }
 
+//функция добавления карточек из массива
+function addPlaces (arrayPLaces) {
+  arrayPLaces.forEach(function(item) {
+    elements.append(createCard (item.name, item.link));
+   })
+}
+//функция добавления новых карточек
+function formSubmitPlace (evt) {
+    evt.preventDefault();
+    const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
+    const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
+    elements.prepend(createCard (placeName.value, placeLink.value));
+    placeName.value = ''; //обнуляем
+    placeLink.value = ''; //значения форм
+    closeForm (popupAddPlace); //закрываем форму
+}
 
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
@@ -136,18 +114,12 @@ editButton.addEventListener('click', editForm);
 btnCloseEdit.addEventListener('click', () => closeForm(popupEditForm));
 btnCloseAdd.addEventListener('click', () => closeForm(popupAddPlace));
 btnCloseImage.addEventListener('click', () => closeForm(popupShowImage));
-//открытие формы добавления новго места
+//открытие формы добавления новoго места
 addButton.addEventListener('click', function () {
   openForm(popupAddPlace);
 });
-
 //сохранения на сайте разных форм
-formElements.forEach(function(elem, item) {
-  if (formElements[item].parentElement.classList.contains('popup__edit-form')) {
-    formElements[item].addEventListener('submit', formSubmitHandler);
-  } else if (formElements[item].parentElement.classList.contains('popup__add-place')) {
-    formElements[item].addEventListener('submit', formSubmitPlace);
-  }
-})
+popupEditForm.addEventListener('submit', formSubmitHandler);
+popupAddPlace.addEventListener('submit', formSubmitPlace);
 //добавление карточек при загрузке страницы
-addPlace(initialCards);
+addPlaces(initialCards);
