@@ -1,18 +1,29 @@
 const content = document.querySelector('.content');
+
 const editButton = content.querySelector('.profile__button-edit'); //кнопка редактирования
+
 const popupEditForm = content.querySelector('.popup__edit-form'); //попап-редактировать профиль
 const popupAddPlace = content.querySelector('.popup__add-place'); //попап-добавить новое место
 const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
+
 const btnCloseEdit = content.querySelector('.popup-container__button-reset_edit'); // кнопка-закрыть в редакторе профиля
 const btnCloseAdd = content.querySelector('.popup-container__button-reset_add');// кнопка-закрыть в добавлении новой карточки
 const btnCloseImage = content.querySelector('.popup-container__button-reset_image'); // кнопка-закрыть при увеличении картинки
-const formElements = content.querySelectorAll('.popup-container'); //псевдомассив контейнеров внутри попапа
 const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
+
 const elements = content.querySelector('.elements'); //секция с карточками
+
 const nameInput = content.querySelector('.popup-container__infoform_author'); //форма с именем автора
 const jobInput = content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
 const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
 const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
+
+const image = content.querySelector('.popup-image__picture'); //картинка карточки
+const caption = content.querySelector('.popup-image__caption'); //подпись под картинкой
+
+const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
+const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
+
 const initialCards = [        //массив для добавления карточек мест
   {
       name: 'Архыз',
@@ -83,9 +94,9 @@ function createCard (name, link) {
   })
   //функция открытия попапа с картинкой
   placeElement.querySelector('.element__image').addEventListener('click', function(evt) {
+    image.setAttribute('src', evt.target.src);
+    caption.textContent = name;
     openForm(popupShowImage);
-    content.querySelector('.popup-image__picture').setAttribute('src', evt.target.src);
-    content.querySelector('.popup-image__caption').textContent = name;
   })
   return placeElement;
 }
@@ -99,8 +110,6 @@ function addPlaces (arrayPLaces) {
 //функция добавления новых карточек
 function formSubmitPlace (evt) {
     evt.preventDefault();
-    const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
-    const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
     elements.prepend(createCard (placeName.value, placeLink.value));
     placeName.value = ''; //обнуляем
     placeLink.value = ''; //значения форм
