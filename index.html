@@ -35,8 +35,8 @@
         <form class="popup-container" name="form" method="POST" action="#">
           <h2 class="popup-container__text">Редактировать профиль</h2>
           <fieldset class="popup-container__info">
-            <input class="popup-container__infoform popup-container__infoform_author" name="author" type="text" placeholder="Автор" required>
-            <input class="popup-container__infoform popup-container__infoform_aboutyourself" name="job" type="text" placeholder="О себе" required>
+            <input class="popup-container__infoform popup-container__infoform_author" name="author" type="text" placeholder="Автор" minlength="2" maxlength="40" required>
+            <input class="popup-container__infoform popup-container__infoform_aboutyourself" name="job" type="text" placeholder="О себе"  minlength="2" maxlength="200" required>
             <button class="popup-container__button-add" type="submit">Сохранить</button>
           </fieldset>
           <button class="popup-container__button-reset popup-container__button-reset_edit" type="reset" aria-label="Close"></button>
@@ -48,7 +48,7 @@
           <h2 class="popup-container__text">Новое место</h2>
           <fieldset class="popup-container__info popup-container__info_gray-color">
             <input class="popup-container__infoform popup-container__infoform_place-name" name="place-name" type="text" placeholder="Название" required>
-            <input class="popup-container__infoform popup-container__infoform_place-link" name="link" type="text" placeholder="Ссылка на картинку" required>
+            <input class="popup-container__infoform popup-container__infoform_place-link" name="link" type="url" placeholder="Ссылка на картинку" required>
             <button class="popup-container__button-add" type="submit">Создать</button>
           </fieldset>
           <button class="popup-container__button-reset popup-container__button-reset_add" type="reset" aria-label="Close"></button>
@@ -80,6 +80,7 @@
     </div>
   </template>
   <script src="./script/script.js"></script>
+  <script src="./script/validate.js"></script>
 </body>
 
 </html>
