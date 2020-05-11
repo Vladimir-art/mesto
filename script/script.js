@@ -13,8 +13,8 @@ const addButton = content.querySelector('.profile__button-add'); //кнопка 
 
 const elements = content.querySelector('.elements'); //секция с карточками
 
-const nameInput = content.querySelector('.popup-container__infoform_author'); //форма с именем автора
-const jobInput = content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
+const nameInput = document.forms.form.author; //content.querySelector('.popup-container__infoform_author'); //форма с именем автора
+const jobInput = document.forms.form.job; //content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
 const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
 const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
 

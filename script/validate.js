@@ -1,75 +1,73 @@
+nameInput.value = profileAuthor.textContent;
+jobInput.value = profileSpecialty.textContent;
 
-const showInputError = (formElement, element, errorMessage) => {
+const showInputError = (object, formElement, element, errorMessage) => {
   const errorElement = formElement.querySelector(`#${element.id}-error`);
   element.classList.add('popup-container__infoform_type_error');
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup-container__input-error_active');
+  errorElement.classList.add(object.errorClass);
 };
 
-const hideInputError = (formElement, element) => {
+const hideInputError = (object, formElement, element) => {
   const errorElement = formElement.querySelector(`#${element.id}-error`);
   element.classList.remove('popup-container__infoform_type_error');
-  errorElement.classList.remove('popup-container__input-error_active');
+  errorElement.classList.remove(object.errorClass);
   errorElement.textContent = '';
 };
 
-const isValid = (formElement, formInput) => {
+const isValid = (object, formElement, formInput) => {
   if (!formInput.validity.valid) {
     // Если поле не проходит валидацию, покажем ошибку
-    showInputError(formElement, formInput, formInput.validationMessage);
+    showInputError(object, formElement, formInput, formInput.validationMessage);
   } else {
     // Если проходит, скроем
-    hideInputError(formElement, formInput);
+    hideInputError(object, formElement, formInput);
   }
 };
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup-container__infoform'));
-  const buttonElement = formElement.querySelector('.popup-container__button-add');
-  toggleButtonState(inputList, buttonElement);
+const setEventListeners = (object, formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
+  const buttonElement = formElement.querySelector(object.submitButtonSelector);
+  toggleButtonState(object, inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', ()=> {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      isValid(object, formElement, inputElement);
+      toggleButtonState(object, inputList, buttonElement);
     });
   })
 };
 
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup-container'));
+const enableValidation = (object) => {
+  const formList = Array.from(document.querySelectorAll(object.formElement));
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     })
-    setEventListeners(formElement);
+    setEventListeners(object, formElement);
   })
 };
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
-      // Если поле не валидно, колбэк вернёт true
-  // Обход массива прекратится и вся фунцкция
-  // hasInvalidInput вернёт true
-
-  return !inputElement.validity.valid;
+    return !inputElement.validity.valid;
   })
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (object, inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup-container__button-add_error');
+    buttonElement.classList.add(object.inactiveButtonClass);
   } else {
         // иначе сделай кнопку активной
-    buttonElement.classList.remove('popup-container__button-add_error');
+    buttonElement.classList.remove(object.inactiveButtonClass);
   }
 };
 
 enableValidation({
   formElement: '.popup-container',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  inputSelector: '.popup-container__infoform',
+  submitButtonSelector: '.popup-container__button-add',
+  inactiveButtonClass: 'popup-container__button-add_error',
+  inputErrorClass: 'popup-container__input-error',
+  errorClass: 'popup-container__input-error_active'
 });
 
