@@ -36,9 +36,9 @@
           <h2 class="popup-container__text">Редактировать профиль</h2>
           <fieldset class="popup-container__info">
             <input class="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" type="text" placeholder="Автор" minlength="2" maxlength="40" required>
-            <span class = "popup-container__input-error" id="author-input-error"></span>
+            <span class = "popup-container__input-error" id="author-input-error">Вы пропустили это поле.</span>
             <input class="popup-container__infoform popup-container__infoform_aboutyourself" id="job-input" name="job" type="text" placeholder="О себе"  minlength="2" maxlength="200" required>
-            <span class = "popup-container__input-error" id="job-input-error"></span>
+            <span class = "popup-container__input-error" id="job-input-error">Вы пропустили это поле.</span>
             <button class="popup-container__button-add" type="submit">Сохранить</button>
           </fieldset>
           <button class="popup-container__button-reset popup-container__button-reset_edit" type="reset" aria-label="Close"></button>
@@ -49,10 +49,10 @@
         <form class="popup-container" name="form" method="POST" action="#" novalidate>
           <h2 class="popup-container__text">Новое место</h2>
           <fieldset class="popup-container__info popup-container__info_gray-color">
-            <input class="popup-container__infoform popup-container__infoform_place-name" id="place-input" name="place-name" type="text" placeholder="Название" required>
-            <span class = "popup-container__input-error" id="place-input-error"></span>
+            <input class="popup-container__infoform popup-container__infoform_place-name" id="place-input" name="place-name" type="text" placeholder="Название" minlength="1" maxlength="30"  required>
+            <span class = "popup-container__input-error" id="place-input-error">Вы пропустили это поле.</span>
             <input class="popup-container__infoform popup-container__infoform_place-link" id="link-input" name="link" type="url" placeholder="Ссылка на картинку" required>
-            <span class = "popup-container__input-error" id="link-input-erorr"></span>
+            <span class = "popup-container__input-error" id="link-input-error"></span>
             <button class="popup-container__button-add" type="submit">Создать</button>
           </fieldset>
           <button class="popup-container__button-reset popup-container__button-reset_add" type="reset" aria-label="Close"></button>

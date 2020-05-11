@@ -7,6 +7,7 @@
 @import url(./__button-add/_error/popup-container__button-add_error.css);
 @import url(./__button-reset/popup-container__button-reset.css);
 @import url(./__input-error/popup-container__input-error.css);
+@import url(./__input-error/_active/popup-container__input-error_active.css);
 
 .popup-container {
   width: 430px;
