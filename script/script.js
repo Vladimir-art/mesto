@@ -61,6 +61,18 @@ function closeForm (form) {
   form.classList.remove('popup_opened');
 };
 
+//оверлей для попапов для мыши
+function closePopup (evt) {
+  evt.target.classList.remove('popup_opened');
+}
+
+//оверлей для попапов для клавиши Esc
+// function closePopupKey (evt) {
+//   if (evt.keyCode == 27) {
+//     evt.target.classList.remove('popup_opened');
+//   }
+// }
+
 //функция для занесения данных в попап-редактировать
 function editForm () {
   openForm(popupEditForm);
@@ -122,6 +134,19 @@ editButton.addEventListener('click', editForm);
 btnCloseEdit.addEventListener('click', () => closeForm(popupEditForm));
 btnCloseAdd.addEventListener('click', () => closeForm(popupAddPlace));
 btnCloseImage.addEventListener('click', () => closeForm(popupShowImage));
+//оверлей попапов
+popupEditForm.addEventListener('click', closePopup);
+popupAddPlace.addEventListener('click', closePopup);
+popupShowImage.addEventListener('click', closePopup);
+
+document.body.addEventListener('keydown', function (evt) {
+  const key = evt.keyCode;
+  if (key === 27) {
+    popupEditForm.classList.remove('popup_opened');
+    popupAddPlace.classList.remove('popup_opened');
+    popupShowImage.classList.remove('popup_opened');
+  }
+});
 //открытие формы добавления новoго места
 addButton.addEventListener('click', function () {
   openForm(popupAddPlace);
@@ -131,3 +156,5 @@ popupEditForm.addEventListener('submit', formSubmitHandler);
 popupAddPlace.addEventListener('submit', formSubmitPlace);
 //добавление карточек при загрузке страницы
 addPlaces(initialCards);
+
+
