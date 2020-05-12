@@ -138,7 +138,7 @@ btnCloseImage.addEventListener('click', () => closeForm(popupShowImage));
 popupEditForm.addEventListener('click', closePopup);
 popupAddPlace.addEventListener('click', closePopup);
 popupShowImage.addEventListener('click', closePopup);
-
+//закрытие попапов при нажатии на Esc
 document.body.addEventListener('keydown', function (evt) {
   const key = evt.keyCode;
   if (key === 27) {
@@ -151,10 +151,8 @@ document.body.addEventListener('keydown', function (evt) {
 addButton.addEventListener('click', function () {
   openForm(popupAddPlace);
 });
-//сохранения на сайте разных форм
-popupEditForm.addEventListener('submit', formSubmitHandler);
-popupAddPlace.addEventListener('submit', formSubmitPlace);
-//добавление карточек при загрузке страницы
+
 addPlaces(initialCards);
+
 
 
