@@ -50,9 +50,21 @@ const initialCards = [        //массив для добавления кар�
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+//функция удаления текста ошибки валидации
+function clearError (elem) {
+  const errorSpanList = elem.querySelectorAll('.popup-container__input-error');
+  const errorInputList = elem.querySelectorAll('.popup-container__infoform');
+  errorSpanList.forEach((span) => {
+    span.classList.remove('popup-container__input-error_active');
+  })
+  errorInputList.forEach((input) => {
+    input.classList.remove('popup-container__infoform_type_error');
+  })
+};
 
 //функция открытия попапа
 function openForm(form) {
+  clearError(form);
   form.classList.add('popup_opened');
 }
 
@@ -65,13 +77,6 @@ function closeForm (form) {
 function closePopup (evt) {
   evt.target.classList.remove('popup_opened');
 }
-
-//оверлей для попапов для клавиши Esc
-// function closePopupKey (evt) {
-//   if (evt.keyCode == 27) {
-//     evt.target.classList.remove('popup_opened');
-//   }
-// }
 
 //функция для занесения данных в попап-редактировать
 function editForm () {

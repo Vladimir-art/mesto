@@ -1,6 +1,7 @@
 nameInput.value = profileAuthor.textContent;    //добавляем в поля формы
 jobInput.value = profileSpecialty.textContent;  //сведения об авторе из страницы (чтоб прошла первая валидация, и она была верной)
 
+
 // функция показывает тест с ошибкой введения данных (принимает объект, форму, поля формы и тест ошибки)
 const showInputError = (object, formElement, element, errorMessage) => {
   const errorElement = formElement.querySelector(`#${element.id}-error`); //находим место где появляется ошибка из DOM по его id
