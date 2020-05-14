@@ -52,27 +52,28 @@ const hasInvalidInput = (inputList) => {
 
 //функция активной/неактивной кнопки (принимает объект, массив полей и кнопку соответвующей формы)
 const toggleButtonState = (object, inputList, buttonElement) => {
+  console.log(hasInvalidInput(inputList));
   if (hasInvalidInput(inputList)) { //если хоть одно поле невалидно
     buttonElement.classList.add(object.inactiveButtonClass); //добавляем кнопке класс со стилем неактивной кнопки (серой)
-    // buttonElement.addEventListener('click', (evt) => {
-    //   removeSubmitListeners(evt);
-    // });
+    buttonElement.addEventListener('click', (evt) => {
+      removeSubmitListeners(evt);
+    });
   } else {
         // иначе сделай кнопку активной
     buttonElement.classList.remove(object.inactiveButtonClass);
     // setSubmitListeners(object.formElement);
     //при клике на кнопку проверим что все поля валидны и добавим их на страницу
-    // buttonElement.addEventListener('click', (evt) => {
-    //   setSubmitListeners(evt);
-    // });
     buttonElement.addEventListener('click', (evt) => {
-        //если все поля валидны и ее родитель содержит соответвующий класс, добавляем соответвующую форму на страницу
-        if((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__edit-form'))) {
-          formSubmitHandler(evt); //функция добавления сведений об авторе
-        } else if ((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__add-place'))) {
-          formSubmitPlace(evt); //функция добавления новой карточки
-        }
-      });
+      setSubmitListeners(evt);
+    });
+    // buttonElement.addEventListener('click', (evt) => {
+    //     //если все поля валидны и ее родитель содержит соответвующий класс, добавляем соответвующую форму на страницу
+    //     if((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__edit-form'))) {
+    //       formSubmitHandler(evt); //функция добавления сведений об авторе
+    //     } else if ((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__add-place'))) {
+    //       formSubmitPlace(evt); //функция добавления новой карточки
+    //     }
+    //   });
   }
 };
 

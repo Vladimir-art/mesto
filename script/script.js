@@ -139,22 +139,22 @@ function formSubmitPlace (evt) {
     closeForm (popupAddPlace); //закрываем форму
 }
 
-// function setSubmitListeners (evt) {
-//   // console.log(evt.target.parentElement.parentElement.parentElement);
-//   if (evt.target.closest('.popup__edit-form')) {
-//     popupEditForm.addEventListener('submit', formSubmitHandler);
-//   } else if (evt.target.closest('.popup__add-place')) {
-//     popupAddPlace.addEventListener('submit', formSubmitPlace);
-//   };
-// }
+function setSubmitListeners (evt) {
+  // console.log(evt.target.parentElement.parentElement.parentElement);
+  if (evt.target.closest('.popup__edit-form')) {
+    popupEditForm.addEventListener('submit', formSubmitHandler);
+  } else if (evt.target.closest('.popup__add-place')) {
+    popupAddPlace.addEventListener('submit', formSubmitPlace);
+  };
+}
 
-// function removeSubmitListeners (evt) {
-//   if (evt.target.closest('.popup__edit-form')) {
-//     popupEditForm.removeEventListener('submit', formSubmitHandler);
-//   } else if (evt.target.closest('.popup__add-place')) {
-//     popupAddPlace.removeEventListener('submit', formSubmitPlace);
-//   };
-// }
+function removeSubmitListeners (evt) {
+  if (evt.target.closest('.popup__edit-form')) {
+    popupEditForm.removeEventListener('submit', formSubmitHandler);
+  } else if (evt.target.closest('.popup__add-place')) {
+    popupAddPlace.removeEventListener('submit', formSubmitPlace);
+  };
+}
 
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
