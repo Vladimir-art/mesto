@@ -54,17 +54,20 @@ const initialCards = [        //массив для добавления кар�
 function clearError (elem) {
   const errorSpanList = elem.querySelectorAll('.popup-container__input-error');
   const errorInputList = elem.querySelectorAll('.popup-container__infoform');
+  elem.firstElementChild.reset();
   errorSpanList.forEach((span) => {
     span.classList.remove('popup-container__input-error_active');
-  })
+  });
   errorInputList.forEach((input) => {
     input.classList.remove('popup-container__infoform_type_error');
-  })
+  });
 };
 
 //функция открытия попапа
 function openForm(form) {
-  clearError(form);
+  if (!form.classList.contains('popup__show-image')) {
+    clearError(form);
+  }
   form.classList.add('popup_opened');
 }
 
@@ -75,7 +78,10 @@ function closeForm (form) {
 
 //оверлей для попапов для мыши
 function closePopup (evt) {
-  evt.target.classList.remove('popup_opened');
+  if (evt.target.classList.contains('popup')) {
+    evt.target.classList.remove('popup_opened');
+  };
+
 }
 
 //функция для занесения данных в попап-редактировать
@@ -104,17 +110,17 @@ function createCard (name, link) {
   //функция чтоб ставить лайки карточкам
   placeElement.querySelector('.element__button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__button_like-active');
-  })
+  });
   //функция удаления карточек
   placeElement.querySelector('.element__trash').addEventListener('click', function(evt) {
     evt.target.closest('.element').remove();
-  })
+  });
   //функция открытия попапа с картинкой
   placeElement.querySelector('.element__image').addEventListener('click', function(evt) {
     image.setAttribute('src', evt.target.src);
     caption.textContent = name;
     openForm(popupShowImage);
-  })
+  });
   return placeElement;
 }
 
@@ -122,7 +128,7 @@ function createCard (name, link) {
 function addPlaces (arrayPLaces) {
   arrayPLaces.forEach(function(item) {
     elements.append(createCard (item.name, item.link));
-   })
+   });
 }
 //функция добавления новых карточек
 function formSubmitPlace (evt) {
@@ -132,6 +138,23 @@ function formSubmitPlace (evt) {
     placeLink.value = ''; //значения форм
     closeForm (popupAddPlace); //закрываем форму
 }
+
+// function setSubmitListeners (evt) {
+//   // console.log(evt.target.parentElement.parentElement.parentElement);
+//   if (evt.target.closest('.popup__edit-form')) {
+//     popupEditForm.addEventListener('submit', formSubmitHandler);
+//   } else if (evt.target.closest('.popup__add-place')) {
+//     popupAddPlace.addEventListener('submit', formSubmitPlace);
+//   };
+// }
+
+// function removeSubmitListeners (evt) {
+//   if (evt.target.closest('.popup__edit-form')) {
+//     popupEditForm.removeEventListener('submit', formSubmitHandler);
+//   } else if (evt.target.closest('.popup__add-place')) {
+//     popupAddPlace.removeEventListener('submit', formSubmitPlace);
+//   };
+// }
 
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
@@ -145,11 +168,8 @@ popupAddPlace.addEventListener('click', closePopup);
 popupShowImage.addEventListener('click', closePopup);
 //закрытие попапов при нажатии на Esc
 document.body.addEventListener('keydown', function (evt) {
-  const key = evt.keyCode;
-  if (key === 27) {
-    popupEditForm.classList.remove('popup_opened');
-    popupAddPlace.classList.remove('popup_opened');
-    popupShowImage.classList.remove('popup_opened');
+  if (evt.key === 'Escape') {
+    document.querySelector('.popup_opened').classList.remove('popup_opened');
   }
 });
 //открытие формы добавления новoго места
