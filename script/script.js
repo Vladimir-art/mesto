@@ -50,16 +50,28 @@ const initialCards = [        //массив для добавления кар�
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-//функция удаления текста ошибки валидации
+//функция удаления текста ошибки валидации (принимает одну форму)
 function clearError (elem) {
-  const errorSpanList = elem.querySelectorAll('.popup-container__input-error');
-  const errorInputList = elem.querySelectorAll('.popup-container__infoform');
-  elem.firstElementChild.reset();
-  errorSpanList.forEach((span) => {
+  const errorSpanList = elem.querySelectorAll('.popup-container__input-error'); //находим все спаны
+  const errorInputList = Array.from(elem.querySelectorAll('.popup-container__infoform')); //создаем массив из инпутов
+  const buttonElement = elem.querySelector('.popup-container__button-add'); //находим кнопку формы
+  elem.firstElementChild.reset(); //сбрасываем значения всех инпутов
+  errorSpanList.forEach((span) => { //проходим по всем спанам и удаляем активный текст
     span.classList.remove('popup-container__input-error_active');
   });
-  errorInputList.forEach((input) => {
-    input.classList.remove('popup-container__infoform_type_error');
+  errorInputList.forEach((input) => { //проходим по массиву инпутов
+    input.classList.remove('popup-container__infoform_type_error'); //удаляем класс подчеркивания ошибки валидации
+    if (input.validity.valid) { //проверяем валидность инпута, если валидный то:
+      buttonElement.classList.remove('popup-container__button-add_error'); //удаляем класс неактивной кнопки
+      buttonElement.addEventListener('click', (evt) => { //при клике на кнопку происходит отправка фомы на страницу
+        setSubmitListeners(evt);
+      });
+    } else { //если инпут невалидный, то наоборот
+      buttonElement.classList.add('popup-container__button-add_error');
+      buttonElement.addEventListener('click', (evt) => {
+        removeSubmitListeners(evt);
+      });
+    }
   });
 };
 
@@ -134,20 +146,19 @@ function addPlaces (arrayPLaces) {
 function formSubmitPlace (evt) {
     evt.preventDefault();
     elements.prepend(createCard (placeName.value, placeLink.value));
+    closeForm (popupAddPlace); //закрываем форму
     placeName.value = ''; //обнуляем
     placeLink.value = ''; //значения форм
-    closeForm (popupAddPlace); //закрываем форму
 }
-
+//функция добавляющая обработчик сабмит на форму
 function setSubmitListeners (evt) {
-  // console.log(evt.target.parentElement.parentElement.parentElement);
   if (evt.target.closest('.popup__edit-form')) {
     popupEditForm.addEventListener('submit', formSubmitHandler);
   } else if (evt.target.closest('.popup__add-place')) {
     popupAddPlace.addEventListener('submit', formSubmitPlace);
   };
 }
-
+//функция удаляющая обработчик сабмит на форму
 function removeSubmitListeners (evt) {
   if (evt.target.closest('.popup__edit-form')) {
     popupEditForm.removeEventListener('submit', formSubmitHandler);
@@ -178,6 +189,4 @@ addButton.addEventListener('click', function () {
 });
 
 addPlaces(initialCards);
-
-
 

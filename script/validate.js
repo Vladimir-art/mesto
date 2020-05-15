@@ -31,13 +31,11 @@ const setEventListeners = (object, formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(object.inputSelector)); //создаем массив полей формы
   const buttonElement = formElement.querySelector(object.submitButtonSelector); //находим в DOM кнопку добавления из формы
   toggleButtonState(object, inputList, buttonElement); //поверяем валидность полей формы и делаем кнопку неактивной
-  // good(formElement, inputList);
   //проходим по каждому полю
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', ()=> { //проверяем каждый символ, введенный в поле
       isValid(object, formElement, inputElement); //проверяем на валидность и показываем ошибки
       toggleButtonState(object, inputList, buttonElement); //делаем кнопку активной или неактивной
-      // good(formElement, inputList);
     });
   });
 };
@@ -52,7 +50,6 @@ const hasInvalidInput = (inputList) => {
 
 //функция активной/неактивной кнопки (принимает объект, массив полей и кнопку соответвующей формы)
 const toggleButtonState = (object, inputList, buttonElement) => {
-  console.log(hasInvalidInput(inputList));
   if (hasInvalidInput(inputList)) { //если хоть одно поле невалидно
     buttonElement.classList.add(object.inactiveButtonClass); //добавляем кнопке класс со стилем неактивной кнопки (серой)
     buttonElement.addEventListener('click', (evt) => {
@@ -61,29 +58,12 @@ const toggleButtonState = (object, inputList, buttonElement) => {
   } else {
         // иначе сделай кнопку активной
     buttonElement.classList.remove(object.inactiveButtonClass);
-    // setSubmitListeners(object.formElement);
     //при клике на кнопку проверим что все поля валидны и добавим их на страницу
     buttonElement.addEventListener('click', (evt) => {
       setSubmitListeners(evt);
     });
-    // buttonElement.addEventListener('click', (evt) => {
-    //     //если все поля валидны и ее родитель содержит соответвующий класс, добавляем соответвующую форму на страницу
-    //     if((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__edit-form'))) {
-    //       formSubmitHandler(evt); //функция добавления сведений об авторе
-    //     } else if ((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__add-place'))) {
-    //       formSubmitPlace(evt); //функция добавления новой карточки
-    //     }
-    //   });
   }
 };
-
-// const good = (formElement, inputList) => {
-//   if (hasInvalidInput(inputList)) {
-//     removeSubmitListeners(formElement);
-//   } else {
-//     setSubmitListeners(formElement);
-//   }
-// }
 
 //функция, с которой все начинется - функция создания массива форм страницы
 const enableValidation = (object) => {
@@ -94,7 +74,7 @@ const enableValidation = (object) => {
       evt.preventDefault(); //отменяет стандарное поведение браузера при отправке формы на страницу
     });
     setEventListeners(object, formElement); //вызывает функцию по проверке полей каждой формы на валидность
-  })
+  });
 };
 //вызываем функцию, передаем ей объект с полями форм, которые надо проверить
 enableValidation({
@@ -106,11 +86,3 @@ enableValidation({
   errorClass: 'popup-container__input-error_active' //появление ошибки валидации
 });
 
-// buttonElement.addEventListener('click', (evt) => {
-//   //если все поля валидны и ее родитель содержит соответвующий класс, добавляем соответвующую форму на страницу
-//   if((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__edit-form'))) {
-//     formSubmitHandler(evt); //функция добавления сведений об авторе
-//   } else if ((!hasInvalidInput(inputList)) && (evt.target.closest('.popup__add-place'))) {
-//     formSubmitPlace(evt); //функция добавления новой карточки
-//   }
-// });
