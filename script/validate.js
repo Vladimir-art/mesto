@@ -52,16 +52,11 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (object, inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) { //если хоть одно поле невалидно
     buttonElement.classList.add(object.inactiveButtonClass); //добавляем кнопке класс со стилем неактивной кнопки (серой)
-    buttonElement.addEventListener('click', (evt) => {
-      removeSubmitListeners(evt);
-    });
+    buttonElement.setAttribute('disabled', true);
   } else {
         // иначе сделай кнопку активной
     buttonElement.classList.remove(object.inactiveButtonClass);
-    //при клике на кнопку проверим что все поля валидны и добавим их на страницу
-    buttonElement.addEventListener('click', (evt) => {
-      setSubmitListeners(evt);
-    });
+    buttonElement.removeAttribute('disabled');
   }
 };
 

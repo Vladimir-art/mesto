@@ -50,54 +50,53 @@ const initialCards = [        //массив для добавления кар�
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
 //функция удаления текста ошибки валидации (принимает одну форму)
 function clearError (elem) {
+  const object = {inactiveButtonClass: 'popup-container__button-add_error'}; //создаем объект со стилем неактивной кнопки
   const errorSpanList = elem.querySelectorAll('.popup-container__input-error'); //находим все спаны
   const errorInputList = Array.from(elem.querySelectorAll('.popup-container__infoform')); //создаем массив из инпутов
   const buttonElement = elem.querySelector('.popup-container__button-add'); //находим кнопку формы
   elem.firstElementChild.reset(); //сбрасываем значения всех инпутов
+  toggleButtonState(object, errorInputList, buttonElement); //проверяем массив инпутов и делаем кнопку активной/неактивной (сбрасываем состояние кнопки)
   errorSpanList.forEach((span) => { //проходим по всем спанам и удаляем активный текст
     span.classList.remove('popup-container__input-error_active');
   });
   errorInputList.forEach((input) => { //проходим по массиву инпутов
     input.classList.remove('popup-container__infoform_type_error'); //удаляем класс подчеркивания ошибки валидации
-    if (input.validity.valid) { //проверяем валидность инпута, если валидный то:
-      buttonElement.classList.remove('popup-container__button-add_error'); //удаляем класс неактивной кнопки
-      buttonElement.addEventListener('click', (evt) => { //при клике на кнопку происходит отправка фомы на страницу
-        setSubmitListeners(evt);
-      });
-    } else { //если инпут невалидный, то наоборот
-      buttonElement.classList.add('popup-container__button-add_error');
-      buttonElement.addEventListener('click', (evt) => {
-        removeSubmitListeners(evt);
-      });
-    }
   });
-};
+}
 
 //функция открытия попапа
 function openForm(form) {
-  if (!form.classList.contains('popup__show-image')) {
-    clearError(form);
-  }
   form.classList.add('popup_opened');
+  document.body.addEventListener('keydown', function (evt) { //закрытие попапов при нажатии на Esc
+    if (evt.key === 'Escape') {
+      form.classList.remove('popup_opened');
+    }
+  });
 }
 
 //функция закрытия попапа
 function closeForm (form) {
   form.classList.remove('popup_opened');
-};
+  document.body.removeEventListener('keydown', function (evt) { //закрытие попапов при нажатии на Esc
+    if (evt.key === 'Escape') {
+      form.classList.remove('popup_opened');
+    }
+  });
+}
 
 //оверлей для попапов для мыши
 function closePopup (evt) {
   if (evt.target.classList.contains('popup')) {
     evt.target.classList.remove('popup_opened');
-  };
-
+  }
 }
 
 //функция для занесения данных в попап-редактировать
 function editForm () {
+  clearError(popupEditForm);
   openForm(popupEditForm);
 
   nameInput.value = profileAuthor.textContent;
@@ -147,46 +146,38 @@ function formSubmitPlace (evt) {
     evt.preventDefault();
     elements.prepend(createCard (placeName.value, placeLink.value));
     closeForm (popupAddPlace); //закрываем форму
-    placeName.value = ''; //обнуляем
-    placeLink.value = ''; //значения форм
 }
-//функция добавляющая обработчик сабмит на форму
-function setSubmitListeners (evt) {
-  if (evt.target.closest('.popup__edit-form')) {
-    popupEditForm.addEventListener('submit', formSubmitHandler);
-  } else if (evt.target.closest('.popup__add-place')) {
-    popupAddPlace.addEventListener('submit', formSubmitPlace);
-  };
-}
-//функция удаляющая обработчик сабмит на форму
-function removeSubmitListeners (evt) {
-  if (evt.target.closest('.popup__edit-form')) {
-    popupEditForm.removeEventListener('submit', formSubmitHandler);
-  } else if (evt.target.closest('.popup__add-place')) {
-    popupAddPlace.removeEventListener('submit', formSubmitPlace);
-  };
+
+//функция закрытия попапа на крестик (находит родительский элемент и закрывает попап)
+function findButtonClose (evt) {
+  closeForm(evt.target.closest('.popup_opened'));
 }
 
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
 //кнопка-закрыть на попапах
-btnCloseEdit.addEventListener('click', () => closeForm(popupEditForm));
-btnCloseAdd.addEventListener('click', () => closeForm(popupAddPlace));
-btnCloseImage.addEventListener('click', () => closeForm(popupShowImage));
+btnCloseEdit.addEventListener('click', findButtonClose);
+btnCloseAdd.addEventListener('click', findButtonClose);
+btnCloseImage.addEventListener('click', findButtonClose);
 //оверлей попапов
 popupEditForm.addEventListener('click', closePopup);
 popupAddPlace.addEventListener('click', closePopup);
 popupShowImage.addEventListener('click', closePopup);
-//закрытие попапов при нажатии на Esc
-document.body.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Escape') {
-    document.querySelector('.popup_opened').classList.remove('popup_opened');
-  }
-});
 //открытие формы добавления новoго места
 addButton.addEventListener('click', function () {
+  clearError(popupAddPlace);
   openForm(popupAddPlace);
 });
 
+popupEditForm.addEventListener('submit', formSubmitHandler);
+popupAddPlace.addEventListener('submit', formSubmitPlace);
+
 addPlaces(initialCards);
 
+// if (input.validity.valid) { //проверяем валидность инпута, если валидный то:
+//   buttonElement.classList.remove('popup-container__button-add_error'); //удаляем класс неактивной кнопки
+//   buttonElement.removeAttribute('disabled');
+// } else { //если инпут невалидный, то наоборот
+//   buttonElement.classList.add('popup-container__button-add_error');
+//   buttonElement.setAttribute('disabled', true);
+// }
