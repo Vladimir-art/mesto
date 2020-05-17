@@ -169,15 +169,8 @@ addButton.addEventListener('click', function () {
   openForm(popupAddPlace);
 });
 
-popupEditForm.addEventListener('submit', formSubmitHandler);
-popupAddPlace.addEventListener('submit', formSubmitPlace);
+popupEditForm.addEventListener('submit', formSubmitHandler); //отправка формы редактирования автора
+popupAddPlace.addEventListener('submit', formSubmitPlace); // отправка на сраницу формы добавления новой карточки
 
-addPlaces(initialCards);
+addPlaces(initialCards);//добавление карточек из массива при загрузке страницы
 
-// if (input.validity.valid) { //проверяем валидность инпута, если валидный то:
-//   buttonElement.classList.remove('popup-container__button-add_error'); //удаляем класс неактивной кнопки
-//   buttonElement.removeAttribute('disabled');
-// } else { //если инпут невалидный, то наоборот
-//   buttonElement.classList.add('popup-container__button-add_error');
-//   buttonElement.setAttribute('disabled', true);
-// }
