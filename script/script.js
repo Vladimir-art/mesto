@@ -67,24 +67,23 @@ function clearError (elem) {
   });
 }
 
+//закрытие попапов при нажатии на Esc
+function closeEsc (evt) {
+  if (evt.key === 'Escape') {
+    content.querySelector('.popup_opened').classList.remove('popup_opened');
+  };
+}
+
 //функция открытия попапа
 function openForm(form) {
   form.classList.add('popup_opened');
-  document.body.addEventListener('keydown', function (evt) { //закрытие попапов при нажатии на Esc
-    if (evt.key === 'Escape') {
-      form.classList.remove('popup_opened');
-    }
-  });
+  document.addEventListener('keydown', closeEsc);
 }
 
 //функция закрытия попапа
 function closeForm (form) {
   form.classList.remove('popup_opened');
-  document.body.removeEventListener('keydown', function (evt) { //закрытие попапов при нажатии на Esc
-    if (evt.key === 'Escape') {
-      form.classList.remove('popup_opened');
-    }
-  });
+  document.removeEventListener('keydown', closeEsc);
 }
 
 //оверлей для попапов для мыши
@@ -97,11 +96,12 @@ function closePopup (evt) {
 //функция для занесения данных в попап-редактировать
 function editForm () {
   clearError(popupEditForm);
-  openForm(popupEditForm);
-
   nameInput.value = profileAuthor.textContent;
   jobInput.value = profileSpecialty.textContent;
+
+  openForm(popupEditForm);
 }
+
 //функция для внесения данных об аторе
 function formSubmitHandler (evt) {
     evt.preventDefault();

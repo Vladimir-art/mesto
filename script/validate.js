@@ -23,7 +23,7 @@ const isValid = (object, formElement, formInput) => {
   } else {
     // Если проходит, скроем
     hideInputError(object, formElement, formInput);
-  };
+  }
 };
 
 //функция создания массива полей формы и их проверки на валидность (принимает объект и форму)
