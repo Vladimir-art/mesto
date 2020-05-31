@@ -1,3 +1,5 @@
+import {image, caption,popupShowImage, openForm} from "./index.js";
+
 //функция создания карточки
  export class Card {
   constructor (name, link, cardSelector) {

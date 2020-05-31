@@ -1,3 +1,4 @@
+import {FormValidator} from "./FormValidator.js";
 import { Card } from "./Card.js";
 
 const content = document.querySelector('.content');
@@ -6,7 +7,7 @@ const editButton = content.querySelector('.profile__button-edit'); //кнопк�
 
 const popupEditForm = content.querySelector('.popup__edit-form'); //попап-редактировать профиль
 const popupAddPlace = content.querySelector('.popup__add-place'); //попап-добавить новое место
-const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
+export const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
 
 const btnCloseEdit = content.querySelector('.popup-container__button-reset_edit'); // кнопка-закрыть в редакторе профиля
 const btnCloseAdd = content.querySelector('.popup-container__button-reset_add');// кнопка-закрыть в добавлении новой карточки
@@ -20,8 +21,8 @@ const jobInput = document.forms.form.job; //content.querySelector('.popup-contai
 const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
 const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
 
-const image = content.querySelector('.popup-image__picture'); //картинка карточки
-const caption = content.querySelector('.popup-image__caption'); //подпись под картинкой
+export const image = content.querySelector('.popup-image__picture'); //картинка карточки
+export const caption = content.querySelector('.popup-image__caption'); //подпись под картинкой
 
 const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
 const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
@@ -60,7 +61,7 @@ function clearError (elem) {
   const errorInputList = Array.from(elem.querySelectorAll('.popup-container__infoform')); //создаем массив из инпутов
   const buttonElement = elem.querySelector('.popup-container__button-add'); //находим кнопку формы
   elem.firstElementChild.reset(); //сбрасываем значения всех инпутов
-  // toggleButtonState(object, errorInputList, buttonElement); //проверяем массив инпутов и делаем кнопку активной/неактивной (сбрасываем состояние кнопки)
+  //проверяем массив инпутов и делаем кнопку активной/неактивной (сбрасываем состояние кнопки)
   const validButton = new FormValidator(object, elem);
   validButton._toggleButtonState(errorInputList, buttonElement);
   errorSpanList.forEach((span) => { //проходим по всем спанам и удаляем активный текст
@@ -78,8 +79,8 @@ function closeEsc (evt) {
   };
 }
 
-//функция открытия попапа
-function openForm(form) {
+//функция открытия попапа (экспортируем функцию в класс Card)
+export function openForm(form) {
   form.classList.add('popup_opened');
   document.addEventListener('keydown', closeEsc);
 }
@@ -159,3 +160,20 @@ popupAddPlace.addEventListener('submit', formSubmitPlace); // отправка �
 
 addPlaces(initialCards);//добавление карточек из массива при загрузке страницы
 
+//создаем каждую форму отдельно
+const formAuthor = document.querySelector('.popup-container__author');
+const formPlace = document.querySelector('.popup-container__place');
+//создаем объект с селекторами и классами форм
+const object = {
+  inputSelector: '.popup-container__infoform', //поле формы
+  submitButtonSelector: '.popup-container__button-add', //кнопка добавить/сохранить/создать
+  inactiveButtonClass: 'popup-container__button-add_error', //стиль неактивной кнопки
+  inputErrorClass: 'popup-container__input-error', //место с текстом об ошибке валидации
+  errorClass: 'popup-container__input-error_active' //появление ошибки валидации
+}
+//вызов класса с валидацией для каждой формы
+const formValidatorAuthor = new FormValidator (object, formAuthor); //для валидации формы с автором
+formValidatorAuthor.enableValidation();
+
+const formValidatorPlace = new FormValidator (object, formPlace);//для валидации формы с местом
+formValidatorPlace.enableValidation();

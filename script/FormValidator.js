@@ -35,8 +35,8 @@
 
   _hasInvalidInput(inputList) {
     return inputList.some((inputElement) => {
-          return !inputElement.validity.valid; //если поле невалидно - возвращаем true
-        });
+      return !inputElement.validity.valid; //если поле невалидно - возвращаем true
+    });
   }
 
   _toggleButtonState(inputList, buttonElement) {
