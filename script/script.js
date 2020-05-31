@@ -1,3 +1,5 @@
+import { Card } from "./Card.js";
+
 const content = document.querySelector('.content');
 
 const editButton = content.querySelector('.profile__button-edit'); //кнопка редактирования
@@ -59,8 +61,8 @@ function clearError (elem) {
   const buttonElement = elem.querySelector('.popup-container__button-add'); //находим кнопку формы
   elem.firstElementChild.reset(); //сбрасываем значения всех инпутов
   // toggleButtonState(object, errorInputList, buttonElement); //проверяем массив инпутов и делаем кнопку активной/неактивной (сбрасываем состояние кнопки)
-  const valid = new FormValidator(object, elem);
-  valid._toggleButtonState(errorInputList, buttonElement);
+  const validButton = new FormValidator(object, elem);
+  validButton._toggleButtonState(errorInputList, buttonElement);
   errorSpanList.forEach((span) => { //проходим по всем спанам и удаляем активный текст
     span.classList.remove('popup-container__input-error_active');
   });
@@ -113,57 +115,6 @@ function formSubmitHandler (evt) {
 
     closeForm(popupEditForm);
 }
-
-//функция создания карточки
-class Card {
-  constructor (name, link, cardSelector) {
-    this._name = name;
-    this._link = link;
-    this._cardSelector = cardSelector;
-  }
-  //находим template элемент на странице и клонируем их
-  _getTemplate () {
-    const cardElement = document.querySelector('.element__template')
-    .content
-    .querySelector('.element')
-    .cloneNode(true);
-    return cardElement;
-  }
-  //публичный метод: возвращает карточку со всей функциональностью
-  generateCard () {
-    this._element = this._getTemplate(); //присваивает template элементы
-    this._setEventListeners(); //добавляет карточке слушатели событий
-    this._element.querySelector('.element__place').textContent = this._name; //присваивает значения
-    this._element.querySelector('.element__image').setAttribute('src', this._link);
-    return this._element; //возвращает карточку
-  }
-  //приватный метод: устанавливает слушатели событий
-  _setEventListeners() {
-    this._element.querySelector('.element__button').addEventListener('click', () => {
-      this._handleLikeButton(); //ставить лайки карточкам
-    });
-    this._element.querySelector('.element__trash').addEventListener('click', () => {
-      this._handleDeleteCard(); //удалять карточку
-    });
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._handleShowImage(); //открывать попап с картинкой
-    })
-  }
-  //приватный метод: активный/неактивный лайк
-  _handleLikeButton() {
-    this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
-  }
-  //удаляет всю карточку
-  _handleDeleteCard () {
-    this._element.remove();
-  }
-  //открывает попап с картинкой
-  _handleShowImage() {
-    image.setAttribute('src', this._link);
-    caption.textContent = this._name;
-    openForm(popupShowImage);
-  }
-};
 
 //функция добавления карточек из массива
 function addPlaces (arrayPLaces) {
