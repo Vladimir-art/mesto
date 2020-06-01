@@ -1,4 +1,4 @@
-import {FormValidator} from "./FormValidator.js";
+import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 
 const content = document.querySelector('.content');
@@ -29,34 +29,34 @@ const placeLink = content.querySelector('.popup-container__infoform_place-link')
 
 const initialCards = [        //массив для добавления карточек мест
   {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
   {
-      name: 'Челябинская область',
-      link: 'https://images.unsplash.com/photo-1587542177509-573b5aeb557f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80'
+    name: 'Челябинская область',
+    link: 'https://images.unsplash.com/photo-1587542177509-573b5aeb557f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80'
   },
   {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
   },
   {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
   },
   {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 
 //функция удаления текста ошибки валидации (принимает одну форму)
-function clearError (elem) {
-  const object = {inactiveButtonClass: 'popup-container__button-add_error'}; //создаем объект со стилем неактивной кнопки
+function clearError(elem) {
+  const object = { inactiveButtonClass: 'popup-container__button-add_error' }; //создаем объект со стилем неактивной кнопки
   const errorSpanList = elem.querySelectorAll('.popup-container__input-error'); //находим все спаны
   const errorInputList = Array.from(elem.querySelectorAll('.popup-container__infoform')); //создаем массив из инпутов
   const buttonElement = elem.querySelector('.popup-container__button-add'); //находим кнопку формы
@@ -73,10 +73,10 @@ function clearError (elem) {
 }
 
 //закрытие попапов при нажатии на Esc
-function closeEsc (evt) {
+function closeEsc(evt) {
   if (evt.key === 'Escape') {
     content.querySelector('.popup_opened').classList.remove('popup_opened');
-  };
+  }
 }
 
 //функция открытия попапа (экспортируем функцию в класс Card)
@@ -86,20 +86,20 @@ export function openForm(form) {
 }
 
 //функция закрытия попапа
-function closeForm (form) {
+function closeForm(form) {
   form.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeEsc);
 }
 
 //оверлей для попапов для мыши
-function closePopup (evt) {
+function closePopup(evt) {
   if (evt.target.classList.contains('popup')) {
     evt.target.classList.remove('popup_opened');
   }
 }
 
 //функция для занесения данных в попап-редактировать
-function editForm () {
+function editForm() {
   clearError(popupEditForm);
   nameInput.value = profileAuthor.textContent;
   jobInput.value = profileSpecialty.textContent;
@@ -108,34 +108,37 @@ function editForm () {
 }
 
 //функция для внесения данных об аторе
-function formSubmitHandler (evt) {
-    evt.preventDefault();
+function formSubmitHandler(evt) {
+  evt.preventDefault();
 
-    profileAuthor.textContent = nameInput.value;
-    profileSpecialty.textContent = jobInput.value;
+  profileAuthor.textContent = nameInput.value;
+  profileSpecialty.textContent = jobInput.value;
 
-    closeForm(popupEditForm);
+  closeForm(popupEditForm);
+}
+
+//функция создания карточки с местом
+function handlePlace(name, link) {
+  const card = new Card(name, link);
+  const cardElement = card.generateCard();
+  return cardElement;
 }
 
 //функция добавления карточек из массива
-function addPlaces (arrayPLaces) {
-  arrayPLaces.forEach(function(item) {
-    const card = new Card(item.name, item.link);
-    const cardElement = card.generateCard();
-    elements.append(cardElement);
-   });
+function addPlaces(arrayPLaces) {
+  arrayPLaces.forEach(function (item) {
+  elements.append(handlePlace(item.name, item.link));
+  });
 }
 //функция добавления новых карточек
-function formSubmitPlace (evt) {
-    evt.preventDefault();
-    const card = new Card(placeName.value, placeLink.value);
-    const cardElement = card.generateCard();
-    elements.prepend(cardElement);
-    closeForm (popupAddPlace); //закрываем форму
+function formSubmitPlace(evt) {
+  evt.preventDefault();
+  elements.prepend(handlePlace(placeName.value, placeLink.value));
+  closeForm(popupAddPlace); //закрываем форму
 }
 
 //функция закрытия попапа на крестик (находит родительский элемент и закрывает попап)
-function findButtonClose (evt) {
+function findButtonClose(evt) {
   closeForm(evt.target.closest('.popup_opened'));
 }
 
@@ -164,16 +167,16 @@ addPlaces(initialCards);//добавление карточек из масси�
 const formAuthor = document.querySelector('.popup-container__author');
 const formPlace = document.querySelector('.popup-container__place');
 //создаем объект с селекторами и классами форм
-const object = {
+const formConfig = {
   inputSelector: '.popup-container__infoform', //поле формы
   submitButtonSelector: '.popup-container__button-add', //кнопка добавить/сохранить/создать
   inactiveButtonClass: 'popup-container__button-add_error', //стиль неактивной кнопки
-  inputErrorClass: 'popup-container__input-error', //место с текстом об ошибке валидации
+  inputErrorClass: 'popup-container__infoform_type_error', //стиль красного подчеркивания поля
   errorClass: 'popup-container__input-error_active' //появление ошибки валидации
 }
 //вызов класса с валидацией для каждой формы
-const formValidatorAuthor = new FormValidator (object, formAuthor); //для валидации формы с автором
+const formValidatorAuthor = new FormValidator(formConfig, formAuthor); //для валидации формы с автором
 formValidatorAuthor.enableValidation();
 
-const formValidatorPlace = new FormValidator (object, formPlace);//для валидации формы с местом
+const formValidatorPlace = new FormValidator(formConfig, formPlace);//для валидации формы с местом
 formValidatorPlace.enableValidation();

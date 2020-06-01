@@ -1,22 +1,22 @@
-import {image, caption,popupShowImage, openForm} from "./index.js";
+import { image, caption, popupShowImage, openForm } from "./index.js";
 
 //функция создания карточки
- export class Card {
-  constructor (name, link, cardSelector) {
+export class Card {
+  constructor(name, link, cardSelector) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
   }
   //находим template элемент на странице и клонируем их
-  _getTemplate () {
+  _getTemplate() {
     const cardElement = document.querySelector('.element__template')
-    .content
-    .querySelector('.element')
-    .cloneNode(true);
+      .content
+      .querySelector('.element')
+      .cloneNode(true);
     return cardElement;
   }
   //публичный метод: возвращает карточку со всей функциональностью
-  generateCard () {
+  generateCard() {
     this._element = this._getTemplate(); //присваивает template элементы
     this._setEventListeners(); //добавляет карточке слушатели событий
     this._element.querySelector('.element__place').textContent = this._name; //присваивает значения
@@ -40,7 +40,7 @@ import {image, caption,popupShowImage, openForm} from "./index.js";
     this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
   }
   //удаляет всю карточку
-  _handleDeleteCard () {
+  _handleDeleteCard() {
     this._element.remove();
   }
   //открывает попап с картинкой
@@ -49,4 +49,4 @@ import {image, caption,popupShowImage, openForm} from "./index.js";
     caption.textContent = this._name;
     openForm(popupShowImage);
   }
-};
+}
