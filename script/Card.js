@@ -2,9 +2,9 @@ import { image, caption, popupShowImage, openForm } from "./index.js";
 
 //функция создания карточки
 export class Card {
-  constructor(name, link, cardSelector) {
-    this._name = name;
-    this._link = link;
+  constructor(item, cardSelector) {
+    this._name = item.name;
+    this._link = item.link;
     this._cardSelector = cardSelector;
   }
   //находим template элемент на странице и клонируем их

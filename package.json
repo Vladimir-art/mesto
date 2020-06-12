@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "Learning Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vladimir-art/mesto.git"
+  },
+  "author": "Vladimir Ermolaev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vladimir-art/mesto/issues"
+  },
+  "homepage": "https://github.com/Vladimir-art/mesto#readme"
+}

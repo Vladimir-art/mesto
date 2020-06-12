@@ -1,5 +1,7 @@
+import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
+// import { Section } from "./Section.js";
 
 const content = document.querySelector('.content');
 
@@ -14,7 +16,7 @@ const btnCloseAdd = content.querySelector('.popup-container__button-reset_add');
 const btnCloseImage = content.querySelector('.popup-container__button-reset_image'); // кнопка-закрыть при увеличении картинки
 const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
 
-const elements = content.querySelector('.elements'); //секция с карточками
+const elements = '.elements'; //секция с карточками
 
 const nameInput = document.forms.form.author; //content.querySelector('.popup-container__infoform_author'); //форма с именем автора
 const jobInput = document.forms.form.job; //content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
@@ -118,22 +120,36 @@ function formSubmitHandler(evt) {
 }
 
 //функция создания карточки с местом
-function handlePlace(name, link) {
-  const card = new Card(name, link);
+function handlePlace(item) {
+  const card = new Card(item);
   const cardElement = card.generateCard();
   return cardElement;
 }
 
 //функция добавления карточек из массива
-function addPlaces(arrayPLaces) {
-  arrayPLaces.forEach(function (item) {
-  elements.append(handlePlace(item.name, item.link));
-  });
-}
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    cardList.appendItem(handlePlace(item));
+  }
+}, elements);
+
+cardList.addItem();
+
 //функция добавления новых карточек
 function formSubmitPlace(evt) {
   evt.preventDefault();
-  elements.prepend(handlePlace(placeName.value, placeLink.value));
+  const cardPlace = new Section({
+    items: [{
+        name: placeName.value,
+        link: placeLink.value
+      }],
+    renderer: (item) => {
+      cardPlace.prependItem(handlePlace(item));
+    }
+  }, elements);
+
+  cardPlace.addItem();
   closeForm(popupAddPlace); //закрываем форму
 }
 
@@ -161,7 +177,7 @@ addButton.addEventListener('click', function () {
 popupEditForm.addEventListener('submit', formSubmitHandler); //отправка формы редактирования автора
 popupAddPlace.addEventListener('submit', formSubmitPlace); // отправка на сраницу формы добавления новой карточки
 
-addPlaces(initialCards);//добавление карточек из массива при загрузке страницы
+//addPlaces(initialCards);//добавление карточек из массива при загрузке страницы
 
 //создаем каждую форму отдельно
 const formAuthor = document.querySelector('.popup-container__author');
