@@ -1,4 +1,5 @@
-import { image, caption, popupShowImage, openForm } from "./index.js";
+import { popupShowImage } from "./index.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 //функция создания карточки
 export class Card {
@@ -45,8 +46,7 @@ export class Card {
   }
   //открывает попап с картинкой
   _handleShowImage() {
-    image.setAttribute('src', this._link);
-    caption.textContent = this._name;
-    openForm(popupShowImage);
+    const popupImage = new PopupWithImage(this._name, this._link, popupShowImage);
+    popupImage.open();
   }
 }

@@ -2,6 +2,7 @@ import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 import { Popup } from "./Popup.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 const content = document.querySelector('.content');
 
@@ -149,10 +150,6 @@ closeForm(popupAddPlace);
 closeForm(popupShowImage);
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
-//кнопка-закрыть на попапах
-// btnCloseEdit.addEventListener('click', findButtonClose);
-// btnCloseAdd.addEventListener('click', findButtonClose);
-// btnCloseImage.addEventListener('click', findButtonClose);
 //оверлей попапов
 popupEditForm.addEventListener('click', closePopup);
 popupAddPlace.addEventListener('click', closePopup);
