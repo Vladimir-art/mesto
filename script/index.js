@@ -1,7 +1,7 @@
 import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
-// import { Section } from "./Section.js";
+import { Popup } from "./Popup.js";
 
 const content = document.querySelector('.content');
 
@@ -73,24 +73,15 @@ function clearError(elem) {
     input.classList.remove('popup-container__infoform_type_error'); //удаляем класс подчеркивания ошибки валидации
   });
 }
-
-//закрытие попапов при нажатии на Esc
-function closeEsc(evt) {
-  if (evt.key === 'Escape') {
-    content.querySelector('.popup_opened').classList.remove('popup_opened');
-  }
+//функция открытия попапа
+function closeForm(popupForm) {
+  const closeForm = new Popup(popupForm);
+  return closeForm.close();
 }
-
-//функция открытия попапа (экспортируем функцию в класс Card)
-export function openForm(form) {
-  form.classList.add('popup_opened');
-  document.addEventListener('keydown', closeEsc);
-}
-
 //функция закрытия попапа
-function closeForm(form) {
-  form.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeEsc);
+export function openForm(popupForm) {
+  const openForm = new Popup(popupForm);
+  return openForm.open();
 }
 
 //оверлей для попапов для мыши
@@ -153,17 +144,15 @@ function formSubmitPlace(evt) {
   closeForm(popupAddPlace); //закрываем форму
 }
 
-//функция закрытия попапа на крестик (находит родительский элемент и закрывает попап)
-function findButtonClose(evt) {
-  closeForm(evt.target.closest('.popup_opened'));
-}
-
+closeForm(popupEditForm);
+closeForm(popupAddPlace);
+closeForm(popupShowImage);
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
 //кнопка-закрыть на попапах
-btnCloseEdit.addEventListener('click', findButtonClose);
-btnCloseAdd.addEventListener('click', findButtonClose);
-btnCloseImage.addEventListener('click', findButtonClose);
+// btnCloseEdit.addEventListener('click', findButtonClose);
+// btnCloseAdd.addEventListener('click', findButtonClose);
+// btnCloseImage.addEventListener('click', findButtonClose);
 //оверлей попапов
 popupEditForm.addEventListener('click', closePopup);
 popupAddPlace.addEventListener('click', closePopup);
