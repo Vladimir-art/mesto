@@ -2,7 +2,8 @@ import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 import { Popup } from "./Popup.js";
-import { PopupWithImage } from "./PopupWithImage.js";
+import { PopupWithForm } from "./PopupWithForm.js";
+import { UserInfo } from "./UserInfo.js";
 
 const content = document.querySelector('.content');
 
@@ -19,8 +20,8 @@ const addButton = content.querySelector('.profile__button-add'); //кнопка 
 
 const elements = '.elements'; //секция с карточками
 
-const nameInput = document.forms.form.author; //content.querySelector('.popup-container__infoform_author'); //форма с именем автора
-const jobInput = document.forms.form.job; //content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
+export const nameInput = document.forms.form.author; //content.querySelector('.popup-container__infoform_author'); //форма с именем автора
+export const jobInput = document.forms.form.job; //content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
 const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
 const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
 
@@ -95,21 +96,29 @@ function closePopup(evt) {
 //функция для занесения данных в попап-редактировать
 function editForm() {
   clearError(popupEditForm);
-  nameInput.value = profileAuthor.textContent;
-  jobInput.value = profileSpecialty.textContent;
-
+  const form = new UserInfo({
+    nameSelector: '.profile__author',
+    jobSelector: '.profile__specialty'
+  });
+  form.getUserInfo();
   openForm(popupEditForm);
 }
 
 //функция для внесения данных об аторе
-function formSubmitHandler(evt) {
-  evt.preventDefault();
+const formSubmitHandler = new PopupWithForm({
+  handleFormSubmit: (formData) => {
+    const form = new UserInfo({
+      nameSelector: '.profile__author',
+      jobSelector: '.profile__specialty'
+    });
+    form.setUserInfo();
 
-  profileAuthor.textContent = nameInput.value;
-  profileSpecialty.textContent = jobInput.value;
+    // profileAuthor.textContent = formData.author;
+    // profileSpecialty.textContent = formData.job;
+  }
+}, popupEditForm);
 
-  closeForm(popupEditForm);
-}
+formSubmitHandler.close();
 
 //функция создания карточки с местом
 function handlePlace(item) {
@@ -129,21 +138,24 @@ const cardList = new Section({
 cardList.addItem();
 
 //функция добавления новых карточек
-function formSubmitPlace(evt) {
-  evt.preventDefault();
-  const cardPlace = new Section({
-    items: [{
-        name: placeName.value,
-        link: placeLink.value
+const formSubmitPlace = new PopupWithForm({
+  handleFormSubmit: (formData) => {
+    // console.log(formData);
+    const cardPlace = new Section({
+      items: [{
+        name: formData.name,
+        link: formData.link
       }],
-    renderer: (item) => {
-      cardPlace.prependItem(handlePlace(item));
-    }
-  }, elements);
+      renderer: (item) => {
+        cardPlace.prependItem(handlePlace(item));
+      }
+    }, elements);
 
-  cardPlace.addItem();
-  closeForm(popupAddPlace); //закрываем форму
-}
+    cardPlace.addItem();
+  }
+}, popupAddPlace);
+formSubmitPlace.close();
+
 
 closeForm(popupEditForm);
 closeForm(popupAddPlace);
@@ -159,11 +171,6 @@ addButton.addEventListener('click', function () {
   clearError(popupAddPlace);
   openForm(popupAddPlace);
 });
-
-popupEditForm.addEventListener('submit', formSubmitHandler); //отправка формы редактирования автора
-popupAddPlace.addEventListener('submit', formSubmitPlace); // отправка на сраницу формы добавления новой карточки
-
-//addPlaces(initialCards);//добавление карточек из массива при загрузке страницы
 
 //создаем каждую форму отдельно
 const formAuthor = document.querySelector('.popup-container__author');
@@ -182,3 +189,5 @@ formValidatorAuthor.enableValidation();
 
 const formValidatorPlace = new FormValidator(formConfig, formPlace);//для валидации формы с местом
 formValidatorPlace.enableValidation();
+
+
