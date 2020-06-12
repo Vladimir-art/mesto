@@ -3,9 +3,10 @@ import { PopupWithImage } from "./PopupWithImage.js";
 
 //функция создания карточки
 export class Card {
-  constructor({name, link}, cardSelector) {
-    this._name = name;
-    this._link = link;
+  constructor(item, cardSelector) {
+    this._name = item.name;
+    this._link = item.link;
+    // this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
   }
   //находим template элемент на странице и клонируем их
@@ -33,7 +34,7 @@ export class Card {
       this._handleDeleteCard(); //удалять карточку
     });
     this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._handleShowImage(); //открывать попап с картинкой
+      this._handleCardClick(); //открывать попап с картинкой
     })
   }
   //приватный метод: активный/неактивный лайк
@@ -45,7 +46,7 @@ export class Card {
     this._element.remove();
   }
   //открывает попап с картинкой
-  _handleShowImage() {
+  _handleCardClick() {
     const popupImage = new PopupWithImage(this._name, this._link, popupShowImage);
     popupImage.open();
   }

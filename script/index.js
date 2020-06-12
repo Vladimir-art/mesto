@@ -112,9 +112,6 @@ const formSubmitHandler = new PopupWithForm({
       jobSelector: '.profile__specialty'
     });
     form.setUserInfo();
-
-    // profileAuthor.textContent = formData.author;
-    // profileSpecialty.textContent = formData.job;
   }
 }, popupEditForm);
 
