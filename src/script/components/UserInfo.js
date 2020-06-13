@@ -1,5 +1,5 @@
 //Класс UserInfo отвечает за управление отображением информации о пользователе на странице
-import { nameInput, jobInput } from "./index.js";
+import { nameInput, jobInput } from "../utils/constants.js";
 
 export class UserInfo {
   constructor({ nameSelector, jobSelector }) {

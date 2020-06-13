@@ -2,7 +2,7 @@
 
 export class Popup {
   constructor(popupSelector) {
-    this._popupSelector = popupSelector; //DOM элемент попапа
+    this._popupSelector = popupSelector; //DOM элемента попапа
   }
 
   open() {

@@ -1,62 +1,17 @@
-import { Section } from "./Section.js";
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
-import { Popup } from "./Popup.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
-
-const content = document.querySelector('.content');
-
-const editButton = content.querySelector('.profile__button-edit'); //кнопка редактирования
-
-const popupEditForm = content.querySelector('.popup__edit-form'); //попап-редактировать профиль
-const popupAddPlace = content.querySelector('.popup__add-place'); //попап-добавить новое место
-export const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
-
-const btnCloseEdit = content.querySelector('.popup-container__button-reset_edit'); // кнопка-закрыть в редакторе профиля
-const btnCloseAdd = content.querySelector('.popup-container__button-reset_add');// кнопка-закрыть в добавлении новой карточки
-const btnCloseImage = content.querySelector('.popup-container__button-reset_image'); // кнопка-закрыть при увеличении картинки
-const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
-
-const elements = '.elements'; //секция с карточками
-
-export const nameInput = document.forms.form.author; //content.querySelector('.popup-container__infoform_author'); //форма с именем автора
-export const jobInput = document.forms.form.job; //content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
-const profileAuthor = content.querySelector('.profile__author'); //имя автора на странице
-const profileSpecialty = content.querySelector('.profile__specialty'); //деятельность автора на странице
-
-export const image = content.querySelector('.popup-image__picture'); //картинка карточки
-export const caption = content.querySelector('.popup-image__caption'); //подпись под картинкой
-
-const placeName = content.querySelector('.popup-container__infoform_place-name'); //находим элементы
-const placeLink = content.querySelector('.popup-container__infoform_place-link'); //формы, в которые будем записывать данные
-
-const initialCards = [        //массив для добавления карточек мест
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://images.unsplash.com/photo-1587542177509-573b5aeb557f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+import { Section } from "./components/Section.js";
+import { FormValidator } from "./components/FormValidator.js";
+import { Card } from "./components/Card.js";
+import { Popup } from "./components/Popup.js";
+import { PopupWithImage } from "./components/PopupWithImage.js";
+import { PopupWithForm } from "./components/PopupWithForm.js";
+import { UserInfo } from "./components/UserInfo.js";
+import { editButton,
+        popupEditForm,
+        popupAddPlace,
+        popupShowImage,
+        addButton,
+        elements,
+        initialCards } from "./utils/constants.js";
 
 //функция удаления текста ошибки валидации (принимает одну форму)
 function clearError(elem) {
@@ -77,13 +32,13 @@ function clearError(elem) {
 }
 //функция открытия попапа
 function closeForm(popupForm) {
-  const closeForm = new Popup(popupForm);
-  return closeForm.close();
+  const closeForm = new Popup(popupForm); //создаем класс Popup
+  return closeForm.close(); //вызываем метод закрытия попапа
 }
 //функция закрытия попапа
 export function openForm(popupForm) {
   const openForm = new Popup(popupForm);
-  return openForm.open();
+  return openForm.open(); //вызываем метод открытия
 }
 
 //оверлей для попапов для мыши
@@ -93,7 +48,7 @@ function closePopup(evt) {
   }
 }
 
-//функция для занесения данных в попап-редактировать
+//функция для занесения данных в попап-редактировать при открытии
 function editForm() {
   clearError(popupEditForm);
   const form = new UserInfo({
@@ -104,7 +59,7 @@ function editForm() {
   openForm(popupEditForm);
 }
 
-//функция для внесения данных об аторе
+//функция для внесения данных об аторе после редактирования
 const formSubmitHandler = new PopupWithForm({
   handleFormSubmit: (formData) => {
     const form = new UserInfo({
@@ -119,7 +74,14 @@ formSubmitHandler.close();
 
 //функция создания карточки с местом
 function handlePlace(item) {
-  const card = new Card(item);
+  const card = new Card(item, {
+    handleCardClick: (form) => { //метод вызывает класс по открытию попапа с картинкой (принимает темплейт картинки)
+      form.querySelector('.element__image').addEventListener('click', ()=> { //находит картинку и при клике вызывает класс
+        const popupImage = new PopupWithImage(item, popupShowImage); //создает класс с картинкой (передает объект с {именем и ссылкой}, домом)
+        popupImage.open(); //вызывает метод открытия
+      })
+    }
+  });
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -128,16 +90,15 @@ function handlePlace(item) {
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    cardList.appendItem(handlePlace(item));
+    cardList.appendItem(handlePlace(item)); //передает функцию по созданию карточки картинки
   }
 }, elements);
 
-cardList.addItem();
+cardList.addItem(); //добавляет на страницу
 
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
   handleFormSubmit: (formData) => {
-    // console.log(formData);
     const cardPlace = new Section({
       items: [{
         name: formData.name,
@@ -153,7 +114,7 @@ const formSubmitPlace = new PopupWithForm({
 }, popupAddPlace);
 formSubmitPlace.close();
 
-
+//фугкции по закрытию поапов по крестику
 closeForm(popupEditForm);
 closeForm(popupAddPlace);
 closeForm(popupShowImage);
@@ -168,7 +129,7 @@ addButton.addEventListener('click', function () {
   clearError(popupAddPlace);
   openForm(popupAddPlace);
 });
-
+//------------в а л и д а ц и я -------------
 //создаем каждую форму отдельно
 const formAuthor = document.querySelector('.popup-container__author');
 const formPlace = document.querySelector('.popup-container__place');
