@@ -1,4 +1,4 @@
-export const content = document.querySelector('.content');
+const content = document.querySelector('.content');
 
 export const editButton = content.querySelector('.profile__button-edit'); //кнопка редактирования
 
