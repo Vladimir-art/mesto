@@ -22,7 +22,8 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1
+              importLoaders: 1,
+              esModule: true
             }
           },
           'postcss-loader'
@@ -33,7 +34,7 @@ module.exports = {
         loader: 'html-loader',
       },
       {
-        test: /\.(png|svg|jpg|gif|woff2)$/,
+        test: /\.(png|svg|jpg|gif|woff2|woff|ttf)$/,
         loader: 'file-loader',
       },
     ]
@@ -42,6 +43,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin(),
   ]
 };
