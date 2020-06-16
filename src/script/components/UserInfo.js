@@ -8,8 +8,10 @@ export class UserInfo {
   }
   //возвращает объект с данными пользователя
   getUserInfo() {
-    nameInput.value = this._nameSelector.textContent;
-    jobInput.value = this._jobSelector.textContent;
+   return {
+    nameInput: this._nameSelector.textContent,
+    jobInput: this._jobSelector.textContent
+    };
   }
   //принимает новые данные пользователя и добавляет их на страницу
   setUserInfo() {

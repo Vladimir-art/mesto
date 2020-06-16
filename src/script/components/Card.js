@@ -4,11 +4,11 @@ export class Card {
     this._name = item.name; //имя картинки
     this._link = item.link; //ссылка на картинку
     this._handleCardClick = handleCardClick; //функция по открытию попапа с картинкой
-    this._cardSelector = cardSelector;
+    this._cardSelector = document.querySelector(cardSelector);
   }
   //находим template элемент на странице и клонируем их
   _getTemplate() {
-    const cardElement = document.querySelector('.element__template')
+    const cardElement = this._cardSelector
       .content
       .querySelector('.element')
       .cloneNode(true);
@@ -30,7 +30,9 @@ export class Card {
     this._element.querySelector('.element__trash').addEventListener('click', () => {
       this._handleDeleteCard(); //удалять карточку
     });
-    this._handleCardClick(this._element); //открывает попап с картинкой
+    this._element.querySelector('.element__image').addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link); //открывает попап с картинкой
+    })
   }
   //приватный метод: активный/неактивный лайк
   _handleLikeButton() {

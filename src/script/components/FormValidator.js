@@ -1,11 +1,11 @@
 export class FormValidator {
   constructor(object, form) {
     this._form = form;
-    this._inputSelector = object.inputSelector;
-    this._submitButtonSelector = object.submitButtonSelector;
-    this._inactiveButtonClass = object.inactiveButtonClass;
-    this._inputErrorClass = object.inputErrorClass;
-    this._errorClass = object.errorClass;
+    this._inputSelector = object.inputSelector; //поле формы
+    this._submitButtonSelector = object.submitButtonSelector; //кнопка добавить/сохранить/создать
+    this._inactiveButtonClass = object.inactiveButtonClass; //стиль неактивной кнопки
+    this._inputErrorClass = object.inputErrorClass; //стиль красного подчеркивания поля
+    this._errorClass = object.errorClass; //появление ошибки валидации
   }
 
   _showInputError(inputElement, errorMessage) {
@@ -59,6 +59,21 @@ export class FormValidator {
         this._isValid(inputElement); //проверяем на валидность и показываем ошибки
         this._toggleButtonState(inputList, buttonElement); //делаем кнопку активной или неактивной
       });
+    });
+  }
+  //сбрасываем состояние кнопки
+  clearError() {
+    const errorSpanList = this._form.querySelectorAll('.popup-container__input-error'); //находим все спаны
+    const inputList = Array.from(this._form.querySelectorAll(this._inputSelector)); //создаем массив из инпутов
+    const buttonElement = this._form.querySelector(this._submitButtonSelector); //находим кнопку формы
+    this._form.reset(); //сбрасываем значения всех инпутов
+    //проверяем массив инпутов и делаем кнопку активной/неактивной (сбрасываем состояние кнопки)
+    this._toggleButtonState(inputList, buttonElement);
+    errorSpanList.forEach((span) => { //проходим по всем спанам и удаляем активный текст
+      span.classList.remove('popup-container__input-error_active');
+    });
+    inputList.forEach((input) => { //проходим по массиву инпутов
+      input.classList.remove(this._inputErrorClass); //удаляем класс подчеркивания ошибки валидации
     });
   }
 }
