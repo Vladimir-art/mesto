@@ -15,7 +15,8 @@ import { editButton,
         initialCards,
         formConfig,
         formAuthor,
-        formPlace } from "../script/utils/constants.js";
+        formPlace,
+        nameInput, jobInput } from "../script/utils/constants.js";
 
 // создаем карточку открытия/закрытия попапа
 const authorForm = new Popup(popupEditForm);
@@ -36,7 +37,7 @@ const form = new UserInfo({
 
 //функция для занесения данных в попап-редактировать при открытии
 function editForm() {
-  formValidatorAuthor.clearError(); //сбрасываем состояние кнопки
+  formValidatorAuthor.clearError();//сбрасываем состояние кнопки
   form.getUserInfo();
   authorForm.open();
 }
@@ -44,21 +45,19 @@ function editForm() {
 //функция для внесения данных об аторе после редактирования
 const formSubmitHandler = new PopupWithForm({
   handleFormSubmit: (formData) => {
-    form.setUserInfo();
+    form.setUserInfo(formData.author, formData.job);
   }
 }, popupEditForm);
 
 formSubmitHandler.open();
 
-// const popupImage = new PopupWithImage({name, link}, popupShowImage); как мне передать создание данного класса в глобальный скоуп,
-//если в одном случае ф-ция handlePlace принимает объекты из массива, а во втором значения полей формы.
+const popupImage = new PopupWithImage(popupShowImage); //класс с картинкой
 
 //функция создания карточки с местом
 function handlePlace(item) {
   const card = new Card(item, {
-    handleCardClick: (name, link) => { //метод вызывает класс по открытию попапа с картинкой (принимает темплейт картинки)
-        const popupImage = new PopupWithImage({name, link}, popupShowImage); //создает класс с картинкой (передает объект с {именем и ссылкой}, домом)
-        popupImage.open(); //вызывает метод открытия
+    handleCardClick: () => { //Обращается к классу по открытию попапа с картинкой и
+        popupImage.open(item.name, item.link); //вызывает метод открытия
     }
   }, '.element__template');
   const cardElement = card.generateCard();
@@ -67,28 +66,18 @@ function handlePlace(item) {
 
 //функция добавления карточек из массива
 const cardList = new Section({
-  items: initialCards,
   renderer: (item) => {
-    cardList.appendItem(handlePlace(item)); //передает функцию по созданию карточки картинки в конец секции
+    cardList.prependItem(handlePlace(item)); //передает функцию по созданию карточки картинки в конец секции
   }
 }, elements);
 
-cardList.addItem(); //добавляет на страницу
+cardList.addItem(initialCards); //добавляет на страницу
 
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
   handleFormSubmit: (formData) => {
-    const cardPlace = new Section({ //создаю еще один класс, поскольку renderer добавляет карточки в начало контейнера
-      items: [{
-        name: formData.name,
-        link: formData.link
-      }],
-      renderer: (item) => {
-        cardPlace.prependItem(handlePlace(item)); //в начало контейнера
-      }
-    }, elements);
-
-    cardPlace.addItem();
+    const arrayImage = [formData]; //создаю массив из объекта инпутов
+    cardList.addItem(arrayImage);
   }
 }, popupAddPlace);
 
