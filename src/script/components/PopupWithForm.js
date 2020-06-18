@@ -23,7 +23,7 @@ export class PopupWithForm extends Popup { //наследует класс Popup
       this._handleFormSubmit(this._getInputValues()); //вызывает метод в index.js
 
       this.close(); //закрывает попап
-    });
+    }, {once: true});
   }
 
   close() {

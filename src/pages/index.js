@@ -19,9 +19,9 @@ import { editButton,
         nameInput, jobInput } from "../script/utils/constants.js";
 
 // создаем карточку открытия/закрытия попапа
-const authorForm = new Popup(popupEditForm);
-const addPlace = new Popup(popupAddPlace);
-const showImage = new Popup(popupShowImage);
+// const authorForm = new Popup(popupEditForm);
+// const addPlace = new Popup(popupAddPlace);
+// const showImage = new Popup(popupShowImage);
 
 //оверлей для попапов для мыши
 function closePopup(evt) {
@@ -39,7 +39,7 @@ const form = new UserInfo({
 function editForm() {
   formValidatorAuthor.clearError();//сбрасываем состояние кнопки
   form.getUserInfo();
-  authorForm.open();
+  formSubmitHandler.open();
 }
 
 //функция для внесения данных об аторе после редактирования
@@ -81,12 +81,12 @@ const formSubmitPlace = new PopupWithForm({
   }
 }, popupAddPlace);
 
-formSubmitPlace.open();
+// formSubmitPlace.open();
 
 //фугкции по закрытию поапов по крестику
-authorForm.close();
-addPlace.close();
-showImage.close();
+formSubmitHandler.close();
+formSubmitPlace.close();
+popupImage.close();
 //при клике открываем форму-редактировать
 editButton.addEventListener('click', editForm);
 //оверлей попапов
@@ -96,7 +96,7 @@ popupShowImage.addEventListener('click', closePopup);
 //открытие формы добавления новoго места
 addButton.addEventListener('click', function () {
   formValidatorPlace.clearError(); //сбрасываем состояние кнопки
-  addPlace.open();
+  formSubmitPlace.open();
 });
 //------------в а л и д а ц и я -------------
 //вызов класса с валидацией для каждой формы
