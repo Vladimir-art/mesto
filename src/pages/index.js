@@ -18,11 +18,6 @@ import { editButton,
         formPlace,
         nameInput, jobInput } from "../script/utils/constants.js";
 
-// создаем карточку открытия/закрытия попапа
-// const authorForm = new Popup(popupEditForm);
-// const addPlace = new Popup(popupAddPlace);
-// const showImage = new Popup(popupShowImage);
-
 //оверлей для попапов для мыши
 function closePopup(evt) {
   if (evt.target.classList.contains('popup')) {
