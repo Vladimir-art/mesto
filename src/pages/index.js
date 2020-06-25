@@ -1,8 +1,8 @@
 import "./index.css";
+import { API } from "../script/components/API.js";
 import { Section } from "../script/components/Section.js";
 import { FormValidator } from "../script/components/FormValidator.js";
 import { Card } from "../script/components/Card.js";
-import { Popup } from "../script/components/Popup.js";
 import { PopupWithImage } from "../script/components/PopupWithImage.js";
 import { PopupWithForm } from "../script/components/PopupWithForm.js";
 import { UserInfo } from "../script/components/UserInfo.js";
@@ -15,8 +15,26 @@ import { editButton,
         initialCards,
         formConfig,
         formAuthor,
-        formPlace,
-        nameInput, jobInput } from "../script/utils/constants.js";
+        formPlace } from "../script/utils/constants.js";
+
+//------------с е р в е р -------------
+const userInterface = new API({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-12/users/me',
+  headers: {
+    authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
+    'Content-Type': 'application/json'
+  }
+});
+userInterface.getUserInterface();
+
+const firstCards = new API({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-12/cards',
+  headers: {
+    authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
+    'Content-Type': 'application/json'
+  }
+});
+firstCards.getInitialCards();
 
 //оверлей для попапов для мыши
 function closePopup(evt) {
@@ -66,7 +84,10 @@ const cardList = new Section({
   }
 }, elements);
 
-cardList.addItem(initialCards); //добавляет на страницу
+firstCards.getInitialCards().then((arr) => {
+  cardList.addItem(arr);
+})
+// cardList.addItem(initialCards); //добавляет на страницу
 
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
@@ -100,5 +121,3 @@ formValidatorAuthor.enableValidation();
 
 const formValidatorPlace = new FormValidator(formConfig, formPlace);//для валидации формы с местом
 formValidatorPlace.enableValidation();
-
-
