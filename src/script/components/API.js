@@ -1,39 +1,45 @@
-import { author, job, avatar } from "../utils/constants.js";
 
 export class API {
-  constructor({url, headers}) {
-    this._url = url;
-    this._headers = headers;
+  constructor({baseUrl}) {
+    this._baseUrl = baseUrl;
   }
 
-  getInitialCards() {
-    return fetch(`${this._url}`, {
-      method: 'GET',
-      headers: this._headers
-    })
-      .then(res => res.json())
+  _fetch(url, params) {
+      params.headers = {
+        authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
+        'Content-Type': 'application/json'
+      };
+      params.body = JSON.stringify(params.body);
+
+    return fetch(this._baseUrl + url, params)
       .then((res) => {
-        return res;
+        if(res.ok) {
+          return res.json();
+        }
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
   }
 
-  getUserInterface() {
-    fetch(`${this._url}`, {
-      method: 'GET',
-      headers: this._headers
+  // getInitialCards() {
+  //   return fetch(`${this._url}`, {
+  //     method: 'GET',
+  //     headers: this._headers
+  //   })
+  //     .then(res => res.json())
+  //     .then((res) => {
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       console.log(`Ошибка: ${err}`);
+  //     })
+  // }
+
+  getUserInterface(url) {
+    return this._fetch(url, {
+      method: 'GET'
     })
-      .then(res => res.json())
-      .then((res) => {
-        document.querySelector(author).textContent = res.name;
-        document.querySelector(job).textContent = res.about;
-        document.querySelector(avatar).getAttribute('src', `${res.avatar}`);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
   }
 }
 

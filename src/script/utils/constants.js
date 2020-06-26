@@ -1,4 +1,5 @@
 const content = document.querySelector('.content');
+export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-12';
 
 export const editButton = content.querySelector('.profile__button-edit'); //кнопка редактирования
 
@@ -6,9 +7,6 @@ export const popupEditForm = content.querySelector('.popup__edit-form'); //по�
 export const popupAddPlace = content.querySelector('.popup__add-place'); //попап-добавить новое место
 export const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
 
-export const author = '.profile__author'; //
-export const job = '.profile__specialty'; //
-export const avatar = '.profile__avatar'; //
 export const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
 
 export const elements = '.elements'; //секция с карточками

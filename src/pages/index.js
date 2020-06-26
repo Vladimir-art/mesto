@@ -18,23 +18,23 @@ import { editButton,
         formPlace } from "../script/utils/constants.js";
 
 //------------с е р в е р -------------
-const userInterface = new API({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-12/users/me',
-  headers: {
-    authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
-    'Content-Type': 'application/json'
-  }
-});
-userInterface.getUserInterface();
+// const userInterface = new API({
+//   url: 'https://mesto.nomoreparties.co/v1/cohort-12/users/me',
+//   headers: {
+//     authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
+//     'Content-Type': 'application/json'
+//   }
+// });
+// userInterface.getUserInterface();
 
-const firstCards = new API({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-12/cards',
-  headers: {
-    authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
-    'Content-Type': 'application/json'
-  }
-});
-firstCards.getInitialCards();
+// const firstCards = new API({
+//   url: 'https://mesto.nomoreparties.co/v1/cohort-12/cards',
+//   headers: {
+//     authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
+//     'Content-Type': 'application/json'
+//   }
+// });
+
 
 //оверлей для попапов для мыши
 function closePopup(evt) {
@@ -45,8 +45,10 @@ function closePopup(evt) {
 // создаем класс информации об авторе страницы
 const form = new UserInfo({
   nameSelector: '.profile__author',
-  jobSelector: '.profile__specialty'
+  jobSelector: '.profile__specialty',
+  avatar: '.profile__avatar'
 });
+form.userInterface();
 
 //функция для занесения данных в попап-редактировать при открытии
 function editForm() {
@@ -84,10 +86,10 @@ const cardList = new Section({
   }
 }, elements);
 
-firstCards.getInitialCards().then((arr) => {
-  cardList.addItem(arr);
-})
-// cardList.addItem(initialCards); //добавляет на страницу
+cardList.addItem(initialCards);
+// firstCards.getInitialCards().then((arr) => {
+//   cardList.addItem(arr);//добавляет на страницу
+// })
 
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
