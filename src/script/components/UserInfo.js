@@ -17,7 +17,7 @@ export class UserInfo {
       .then((data) => {
         this._nameSelector.textContent = data.name;
         this._jobSelector.textContent = data.about;
-        this.avatar.getAttribute('src', data.avatar);
+        this.avatar.setAttribute('src', `${data.avatar}`);
       })
   }
   //возвращает объект с данными пользователя
@@ -30,8 +30,8 @@ export class UserInfo {
     }
   }
   //принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo(author, job) {
-    this._nameSelector.textContent = author;
-    this._jobSelector.textContent = job;
+  setUserInfo(form) {
+    this._nameSelector.textContent = form.author;
+    this._jobSelector.textContent = form.job;
   }
 }

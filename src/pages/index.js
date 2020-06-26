@@ -12,29 +12,13 @@ import { editButton,
         popupShowImage,
         addButton,
         elements,
-        initialCards,
         formConfig,
         formAuthor,
-        formPlace } from "../script/utils/constants.js";
+        formPlace,
+        baseUrl } from "../script/utils/constants.js";
 
 //------------с е р в е р -------------
-// const userInterface = new API({
-//   url: 'https://mesto.nomoreparties.co/v1/cohort-12/users/me',
-//   headers: {
-//     authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
-//     'Content-Type': 'application/json'
-//   }
-// });
-// userInterface.getUserInterface();
-
-// const firstCards = new API({
-//   url: 'https://mesto.nomoreparties.co/v1/cohort-12/cards',
-//   headers: {
-//     authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
-//     'Content-Type': 'application/json'
-//   }
-// });
-
+const api = new API({baseUrl});
 
 //оверлей для попапов для мыши
 function closePopup(evt) {
@@ -50,21 +34,20 @@ const form = new UserInfo({
 });
 form.userInterface();
 
+//функция для внесения данных об аторе после редактирования
+const formSubmitHandler = new PopupWithForm({
+  handleFormSubmit: (formData) => {
+    form.setUserInfo(formData);
+  }
+}, popupEditForm);
+
+
 //функция для занесения данных в попап-редактировать при открытии
 function editForm() {
   formValidatorAuthor.clearError();//сбрасываем состояние кнопки
   form.getUserInfo();
   formSubmitHandler.open();
 }
-
-//функция для внесения данных об аторе после редактирования
-const formSubmitHandler = new PopupWithForm({
-  handleFormSubmit: (formData) => {
-    form.setUserInfo(formData.author, formData.job);
-  }
-}, popupEditForm);
-
-formSubmitHandler.open();
 
 const popupImage = new PopupWithImage(popupShowImage); //класс с картинкой
 
@@ -86,10 +69,9 @@ const cardList = new Section({
   }
 }, elements);
 
-cardList.addItem(initialCards);
-// firstCards.getInitialCards().then((arr) => {
-//   cardList.addItem(arr);//добавляет на страницу
-// })
+api.getInitialCards('/cards').then((arr) => {
+  cardList.addItem(arr);//добавляет на страницу
+})
 
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
