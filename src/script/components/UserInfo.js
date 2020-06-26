@@ -33,5 +33,6 @@ export class UserInfo {
   setUserInfo(form) {
     this._nameSelector.textContent = form.author;
     this._jobSelector.textContent = form.job;
+    this._api.sendUserInfo('/users/me', form);
   }
 }

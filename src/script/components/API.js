@@ -34,6 +34,16 @@ export class API {
     })
   }
 
+  sendUserInfo(url, data) {
+    return this._fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: `${data.author}`,
+        about: `${data.job}`
+      })
+    })
+  }
+
 }
 
 
