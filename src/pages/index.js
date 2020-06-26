@@ -78,6 +78,7 @@ const formSubmitPlace = new PopupWithForm({
   handleFormSubmit: (formData) => {
     const arrayImage = [formData]; //создаю массив из объекта инпутов
     cardList.addItem(arrayImage);
+    api.sendPlaceCard('/cards', formData);
   }
 }, popupAddPlace);
 

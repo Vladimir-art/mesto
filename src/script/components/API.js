@@ -44,6 +44,16 @@ export class API {
     })
   }
 
+  sendPlaceCard(url, data) {
+    return this._fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: `${data.name}`,
+        link: `${data.link}`
+      })
+    })
+  }
+
 }
 
 
