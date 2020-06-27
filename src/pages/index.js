@@ -10,6 +10,7 @@ import { editButton,
         popupEditForm,
         popupAddPlace,
         popupShowImage,
+        popupVerification,
         addButton,
         elements,
         formConfig,
@@ -55,7 +56,15 @@ const popupImage = new PopupWithImage(popupShowImage); //класс с карт�
 function handlePlace(item) {
   const card = new Card(item, {
     handleCardClick: () => { //Обращается к классу по открытию попапа с картинкой и
-        popupImage.open(item.name, item.link); //вызывает метод открытия
+      popupImage.open(item.name, item.link); //вызывает метод открытия
+    },
+    handleCardDelete: (element) => {
+      const popupClose = new PopupWithForm({
+        handleFormSubmit: () => {
+          element.remove();
+        }
+      }, popupVerification);
+      popupClose.open();
     }
   }, '.element__template');
   const cardElement = card.generateCard();

@@ -6,6 +6,7 @@ export const editButton = content.querySelector('.profile__button-edit'); //кн
 export const popupEditForm = content.querySelector('.popup__edit-form'); //попап-редактировать профиль
 export const popupAddPlace = content.querySelector('.popup__add-place'); //попап-добавить новое место
 export const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
+export const popupVerification = content.querySelector('.popup__verification'); //попап подтвердить удаление
 
 export const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
 

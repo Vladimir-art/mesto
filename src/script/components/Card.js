@@ -3,11 +3,12 @@ import { API } from "./API.js";
 
 //функция создания карточки
 export class Card {
-  constructor(item, {handleCardClick}, cardSelector) {
+  constructor(item, {handleCardClick, handleCardDelete}, cardSelector) {
     this._likes = item.likes;
     this._name = item.name; //имя картинки
     this._link = item.link; //ссылка на картинку
     this._handleCardClick = handleCardClick; //функция по открытию попапа с картинкой
+    this._handleCardDelete = handleCardDelete; //удалять карточку
     this._cardSelector = document.querySelector(cardSelector);
     this._api = new API( {baseUrl} );
   }
@@ -34,7 +35,7 @@ export class Card {
       this._handleLikeButton(); //ставить лайки карточкам
     });
     this._element.querySelector('.element__trash').addEventListener('click', () => {
-      this._handleDeleteCard(); //удалять карточку
+      this._handleCardDelete(this._element);//удалять карточку
     });
     this._element.querySelector('.element__image').addEventListener('click', () => {
       this._handleCardClick(this._name, this._link); //открывает попап с картинкой
@@ -43,9 +44,5 @@ export class Card {
   //приватный метод: активный/неактивный лайк
   _handleLikeButton() {
     this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
-  }
-  //удаляет всю карточку
-  _handleDeleteCard() {
-    this._element.remove();
   }
 }
