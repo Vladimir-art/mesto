@@ -58,13 +58,13 @@ function handlePlace(item) {
     handleCardClick: () => { //Обращается к классу по открытию попапа с картинкой и
       popupImage.open(item.name, item.link); //вызывает метод открытия
     },
-    handleCardDelete: (element) => {
-      const popupClose = new PopupWithForm({
+    handleCardDelete: (element) => { //функция получает элемент карточки по которму кликнули
+      const popupClose = new PopupWithForm({ //после создает класс с подтверждением удаления карточки
         handleFormSubmit: () => {
-          element.remove();
+          element.remove(); //удаляет полученный элемент
         }
       }, popupVerification);
-      popupClose.open();
+      popupClose.open();//вызывает класс
     }
   }, '.element__template');
   const cardElement = card.generateCard();
@@ -73,8 +73,8 @@ function handlePlace(item) {
 
 //функция добавления карточек из массива
 const cardList = new Section({
-  renderer: (item) => {
-    cardList.prependItem(handlePlace(item)); //передает функцию по созданию карточки картинки в конец секции
+  renderer: (item, data) => {
+    cardList.prependItem(handlePlace(item, data)); //передает функцию по созданию карточки картинки в конец секции
   }
 }, elements);
 
@@ -85,13 +85,15 @@ api.getInitialCards('/cards').then((arr) => {
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
   handleFormSubmit: (formData) => {
-    const arrayImage = [formData]; //создаю массив из объекта инпутов
-    cardList.addItem(arrayImage);
-    api.sendPlaceCard('/cards', formData);
+    // const arrayImage = [formData]; //создаю массив из объекта инпутов
+    // cardList.addItem(arrayImage);
+    api.sendPlaceCard('/cards', formData)
+      .then((data) => {
+        // console.log(data);
+        cardList.addItem([data]);
+      })
   }
 }, popupAddPlace);
-
-// formSubmitPlace.open();
 
 //фугкции по закрытию поапов по крестику
 formSubmitHandler.close();
@@ -103,6 +105,7 @@ editButton.addEventListener('click', editForm);
 popupEditForm.addEventListener('click', closePopup);
 popupAddPlace.addEventListener('click', closePopup);
 popupShowImage.addEventListener('click', closePopup);
+popupVerification.addEventListener('click', closePopup);
 //открытие формы добавления новoго места
 addButton.addEventListener('click', function () {
   formValidatorPlace.clearError(); //сбрасываем состояние кнопки
