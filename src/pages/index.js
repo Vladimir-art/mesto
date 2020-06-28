@@ -61,7 +61,10 @@ function handlePlace(item) {
     handleCardDelete: (element) => { //функция получает элемент карточки по которму кликнули
       const popupClose = new PopupWithForm({ //после создает класс с подтверждением удаления карточки
         handleFormSubmit: () => {
-          element.remove(); //удаляет полученный элемент
+          console.log(item);
+          api.deleteCard(`/cards/${item._id}`);
+
+          // element.remove(); //удаляет полученный элемент
         }
       }, popupVerification);
       popupClose.open();//вызывает класс
@@ -84,12 +87,9 @@ api.getInitialCards('/cards').then((arr) => {
 
 //функция добавления новых карточек
 const formSubmitPlace = new PopupWithForm({
-  handleFormSubmit: (formData) => {
-    // const arrayImage = [formData]; //создаю массив из объекта инпутов
-    // cardList.addItem(arrayImage);
+  handleFormSubmit: (formData) => {//создаю массив из объекта инпутов
     api.sendPlaceCard('/cards', formData)
       .then((data) => {
-        // console.log(data);
         cardList.addItem([data]);
       })
   }

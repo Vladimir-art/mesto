@@ -5,7 +5,6 @@ import { API } from "./API.js";
 export class Card {
   constructor(item, {handleCardClick, handleCardDelete}, cardSelector) {
     this._item = item;
-    // this._id = item.owner._id;
     this._name = item.name; //имя картинки
     this._link = item.link; //ссылка на картинку
     this._handleCardClick = handleCardClick; //функция по открытию попапа с картинкой
@@ -29,13 +28,12 @@ export class Card {
     this._element.querySelector('.element__image').setAttribute('src', this._link);
     this._element.querySelector('.element__count').textContent = this._item.likes.length;
     this._hiddenButtonTrash();
-    // console.log(this._item);
     return this._element; //возвращает карточку
   }
   //приватный метод: устанавливает слушатели событий
   _setEventListeners() {
     this._element.querySelector('.element__button').addEventListener('click', (evt) => {
-      this._handleLikeButton(); //ставить лайки карточкам
+      this._handleLikeButton(evt); //ставить лайки карточкам
     });
     this._element.querySelector('.element__trash').addEventListener('click', () => {
       this._handleCardDelete(this._element);//удалять карточку
@@ -45,12 +43,24 @@ export class Card {
     });
   }
   //приватный метод: активный/неактивный лайк
-  _handleLikeButton() {
-    this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
+  _handleLikeButton(evt) {
+    // this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
+    // if (this._element.querySelector('.element__button').classList.('element__button_like-active'))
+    // console.log(evt.target);
+    const flags = false;
+    if (!(evt.target.classList.contains('element__button_like-active'))) {
+      evt.target.classList.add('element__button_like-active');
+      this._api.putLike(`/cards/likes/${this._item._id}`);
+      // return flags = true;
+    } else {
+      evt.target.classList.remove('element__button_like-active');
+      this._api.deleteCard(`/cards/likes/${this._item._id}`);
+      // return flags = false;
+    }
   }
 
   _hiddenButtonTrash() {
-    this._element.setAttribute('id', this._item.owner._id);
+    this._element.setAttribute('id', this._item._id);
     if (!(this._item.owner._id === '6f2fd362862b68aabdbf5f59')) {
       this._element.querySelector('.element__trash').style.display = 'none';
     }

@@ -54,6 +54,18 @@ export class API {
     })
   }
 
+  deleteCard(url) {
+    return this._fetch(url, {
+      method: 'DELETE'
+    })
+  }
+
+  putLike(url) {
+    return this._fetch(url, {
+      method: 'PUT'
+    })
+  }
+
 }
 
 
