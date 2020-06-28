@@ -54,17 +54,17 @@ const popupImage = new PopupWithImage(popupShowImage); //класс с карт�
 
 //функция создания карточки с местом
 function handlePlace(item) {
-  const card = new Card(item, {
+  const card = new Card(item, {//каждая карточка имеет свой id
     handleCardClick: () => { //Обращается к классу по открытию попапа с картинкой и
       popupImage.open(item.name, item.link); //вызывает метод открытия
     },
-    handleCardDelete: (element) => { //функция получает элемент карточки по которму кликнули
-      const popupClose = new PopupWithForm({ //после создает класс с подтверждением удаления карточки
+    handleCardDelete: (element) => {
+      const popupClose = new PopupWithForm({ // создает класс с подтверждением удаления карточки
         handleFormSubmit: () => {
-          console.log(item);
-          api.deleteCard(`/cards/${item._id}`);
-
-          // element.remove(); //удаляет полученный элемент
+          api.deleteCard(`/cards/${item._id}`)
+            .then((result) => {
+              element.remove();
+            });//удаляет полученный элемент
         }
       }, popupVerification);
       popupClose.open();//вызывает класс
@@ -90,7 +90,7 @@ const formSubmitPlace = new PopupWithForm({
   handleFormSubmit: (formData) => {//создаю массив из объекта инпутов
     api.sendPlaceCard('/cards', formData)
       .then((data) => {
-        cardList.addItem([data]);
+        cardList.addItem([data]).reverse();
       })
   }
 }, popupAddPlace);

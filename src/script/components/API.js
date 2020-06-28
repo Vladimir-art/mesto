@@ -63,7 +63,7 @@ export class API {
   putLike(url) {
     return this._fetch(url, {
       method: 'PUT'
-    })
+      })
   }
 
 }

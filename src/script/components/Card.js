@@ -24,10 +24,12 @@ export class Card {
   generateCard() {
     this._element = this._getTemplate(); //присваивает template элементы
     this._setEventListeners(); //добавляет карточке слушатели событий
+    this._isMyLike();
     this._element.querySelector('.element__place').textContent = this._name; //присваивает значения
     this._element.querySelector('.element__image').setAttribute('src', this._link);
     this._element.querySelector('.element__count').textContent = this._item.likes.length;
     this._hiddenButtonTrash();
+    // console.log(this._item);
     return this._element; //возвращает карточку
   }
   //приватный метод: устанавливает слушатели событий
@@ -47,16 +49,28 @@ export class Card {
     // this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
     // if (this._element.querySelector('.element__button').classList.('element__button_like-active'))
     // console.log(evt.target);
-    const flags = false;
+
     if (!(evt.target.classList.contains('element__button_like-active'))) {
-      evt.target.classList.add('element__button_like-active');
-      this._api.putLike(`/cards/likes/${this._item._id}`);
-      // return flags = true;
+      this._api.putLike(`/cards/likes/${this._item._id}`, this._item)
+        .then((data) => {
+          evt.target.classList.add('element__button_like-active');
+          this._element.querySelector('.element__count').textContent = data.likes.length;
+        });
     } else {
-      evt.target.classList.remove('element__button_like-active');
-      this._api.deleteCard(`/cards/likes/${this._item._id}`);
-      // return flags = false;
+      this._api.deleteCard(`/cards/likes/${this._item._id}`)
+        .then((data) => {
+          evt.target.classList.remove('element__button_like-active');
+          this._element.querySelector('.element__count').textContent = data.likes.length;
+        })
     }
+  }
+
+  _isMyLike() {
+    this._item.likes.forEach((item) => {
+      if(item._id === '6f2fd362862b68aabdbf5f59') {
+        this._element.querySelector('.element__button').classList.add('element__button_like-active');
+      }
+    })
   }
 
   _hiddenButtonTrash() {
