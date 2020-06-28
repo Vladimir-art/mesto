@@ -1,5 +1,5 @@
 .profile__background {
-  display: flex;
+  margin: 0;
   position: absolute;
   z-index: 1;
   width: 120px;

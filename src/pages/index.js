@@ -11,11 +11,14 @@ import { editButton,
         popupAddPlace,
         popupShowImage,
         popupVerification,
+        popupAvatar,
         addButton,
+        avatar,
         elements,
         formConfig,
         formAuthor,
         formPlace,
+        formAvatar,
         baseUrl } from "../script/utils/constants.js";
 
 //------------с е р в е р -------------
@@ -95,6 +98,15 @@ const formSubmitPlace = new PopupWithForm({
   }
 }, popupAddPlace);
 
+const formSubmitAvatar = new PopupWithForm({
+  handleFormSubmit: (data) => {
+    api.changeAvatar('/users/me/avatar', data)
+    .then((data) => {
+      document.querySelector('.profile__avatar').setAttribute('src', data.avatar);
+    })
+  }
+}, popupAvatar);
+
 //фугкции по закрытию поапов по крестику
 formSubmitHandler.close();
 formSubmitPlace.close();
@@ -111,6 +123,11 @@ addButton.addEventListener('click', function () {
   formValidatorPlace.clearError(); //сбрасываем состояние кнопки
   formSubmitPlace.open();
 });
+avatar.addEventListener('click', function () {
+  formValidatorAvatar.clearError(); //сбрасываем состояние кнопки
+  formSubmitAvatar.open();
+});
+
 //------------в а л и д а ц и я -------------
 //вызов класса с валидацией для каждой формы
 const formValidatorAuthor = new FormValidator(formConfig, formAuthor); //для валидации формы с автором
@@ -118,3 +135,6 @@ formValidatorAuthor.enableValidation();
 
 const formValidatorPlace = new FormValidator(formConfig, formPlace);//для валидации формы с местом
 formValidatorPlace.enableValidation();
+
+const formValidatorAvatar = new FormValidator(formConfig, formAvatar);//для валидации формы с
+formValidatorAvatar.enableValidation();

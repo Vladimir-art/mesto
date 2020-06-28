@@ -16,7 +16,7 @@
       <section class="profile">
         <div class="profile__cover">
           <div class="profile__information">
-            <div class="profile__background"></div>
+            <figure class="profile__background"></figure>
             <img class="profile__avatar" alt="Жак-Ив Кусто">
           </div>
           <div class="profile__info">
@@ -74,6 +74,18 @@
           <fieldset class="popup-container__info">
             <h2 class="popup-container__text">Вы уверены?</h2>
             <button class="popup-container__button-add" type="submit">Да</button>
+          </fieldset>
+          <button class="popup-container__button-reset popup-container__button-reset_add" type="reset" aria-label="Close"></button>
+        </form>
+      </section>
+
+      <section class="popup popup__avatar">
+        <form class="popup-container popup-container__avatar" name="form" method="POST" action="#" novalidate>
+          <h2 class="popup-container__text">Обновить аватар</h2>
+          <fieldset class="popup-container__info popup-container__info_gray-color">
+            <input class="popup-container__infoform popup-container__infoform_avatar-link" id="avatar-input" name="avatar" type="url" placeholder="Введите ссылку" required>
+            <span class = "popup-container__input-error" id="avatar-input-error"></span>
+            <button class="popup-container__button-add" type="submit">Сохранить</button>
           </fieldset>
           <button class="popup-container__button-reset popup-container__button-reset_add" type="reset" aria-label="Close"></button>
         </form>

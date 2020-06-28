@@ -7,8 +7,10 @@ export const popupEditForm = content.querySelector('.popup__edit-form'); //по�
 export const popupAddPlace = content.querySelector('.popup__add-place'); //попап-добавить новое место
 export const popupShowImage = content.querySelector('.popup__show-image'); //попап-открыть картинку
 export const popupVerification = content.querySelector('.popup__verification'); //попап подтвердить удаление
+export const popupAvatar = content.querySelector('.popup__avatar'); //попап подтвердить удаление
 
 export const addButton = content.querySelector('.profile__button-add'); //кнопка добавть новое место
+export const avatar = content.querySelector('.profile__information');
 
 export const elements = '.elements'; //секция с карточками
 
@@ -52,3 +54,4 @@ export const formConfig = {
 
 export const formAuthor = document.querySelector('.popup-container__author');
 export const formPlace = document.querySelector('.popup-container__place');
+export const formAvatar = document.querySelector('.popup-container__avatar');

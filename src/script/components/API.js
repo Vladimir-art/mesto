@@ -66,6 +66,15 @@ export class API {
       })
   }
 
+  changeAvatar(url, data) {
+    return this._fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        avatar: `${data.avatar}`
+      })
+    })
+  }
+
 }
 
 
