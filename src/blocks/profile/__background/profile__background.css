@@ -1,0 +1,14 @@
+.profile__background {
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: transparent;
+  background-image: url('../../../images/button-edit.svg');
+  background-size: 26px 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+}

@@ -46,10 +46,6 @@ export class Card {
   }
   //приватный метод: активный/неактивный лайк
   _handleLikeButton(evt) {
-    // this._element.querySelector('.element__button').classList.toggle('element__button_like-active');
-    // if (this._element.querySelector('.element__button').classList.('element__button_like-active'))
-    // console.log(evt.target);
-
     if (!(evt.target.classList.contains('element__button_like-active'))) {
       this._api.putLike(`/cards/likes/${this._item._id}`, this._item)
         .then((data) => {
@@ -64,15 +60,15 @@ export class Card {
         })
     }
   }
-
+  //функция проверяет на какой карточке стоит мой лайк
   _isMyLike() {
-    this._item.likes.forEach((item) => {
+    this._item.likes.some((item) => {
       if(item._id === '6f2fd362862b68aabdbf5f59') {
         this._element.querySelector('.element__button').classList.add('element__button_like-active');
       }
     })
   }
-
+  //скрыть иконки удаления с чужих карточек
   _hiddenButtonTrash() {
     this._element.setAttribute('id', this._item._id);
     if (!(this._item.owner._id === '6f2fd362862b68aabdbf5f59')) {

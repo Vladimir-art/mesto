@@ -90,7 +90,7 @@ const formSubmitPlace = new PopupWithForm({
   handleFormSubmit: (formData) => {//создаю массив из объекта инпутов
     api.sendPlaceCard('/cards', formData)
       .then((data) => {
-        cardList.addItem([data]).reverse();
+        cardList.addItem([data]);
       })
   }
 }, popupAddPlace);
