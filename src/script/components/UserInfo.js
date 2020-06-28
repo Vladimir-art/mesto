@@ -1,5 +1,5 @@
 //Класс UserInfo отвечает за управление отображением информации о пользователе на странице
-import { nameInput, jobInput, baseUrl } from "../utils/constants.js";
+import { nameInput, jobInput, baseUrl, text } from "../utils/constants.js";
 import { API } from "./API.js";
 
 export class UserInfo {
@@ -18,6 +18,7 @@ export class UserInfo {
         this._nameSelector.textContent = data.name;
         this._jobSelector.textContent = data.about;
         this.avatar.setAttribute('src', `${data.avatar}`);
+        this.avatar.id = `${data._id}`;
       })
   }
   //возвращает объект с данными пользователя
@@ -33,6 +34,6 @@ export class UserInfo {
   setUserInfo(form) {
     this._nameSelector.textContent = form.author;
     this._jobSelector.textContent = form.job;
-    this._api.sendUserInfo('/users/me', form);
+    this._api.sendUserInfo('/users/me', form); //отправием новые данные на сервер
   }
 }

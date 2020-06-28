@@ -27,7 +27,7 @@ export class Card {
     this._isMyLike();
     this._element.querySelector('.element__place').textContent = this._name; //присваивает значения
     this._element.querySelector('.element__image').setAttribute('src', this._link);
-    this._element.querySelector('.element__count').textContent = this._item.likes.length;
+    this._element.querySelector('.element__count').textContent = this._item.likes.length; //меняем количество лайков (получаем длину массива)
     this._hiddenButtonTrash();
     // console.log(this._item);
     return this._element; //возвращает карточку
@@ -50,7 +50,7 @@ export class Card {
       this._api.putLike(`/cards/likes/${this._item._id}`, this._item)
         .then((data) => {
           evt.target.classList.add('element__button_like-active');
-          this._element.querySelector('.element__count').textContent = data.likes.length;
+          this._element.querySelector('.element__count').textContent = data.likes.length; //длина массива из пользователей
         });
     } else {
       this._api.deleteCard(`/cards/likes/${this._item._id}`)
@@ -70,7 +70,7 @@ export class Card {
   }
   //скрыть иконки удаления с чужих карточек
   _hiddenButtonTrash() {
-    this._element.setAttribute('id', this._item._id);
+    // this._element.setAttribute('id', this._item._id);
     if (!(this._item.owner._id === '6f2fd362862b68aabdbf5f59')) {
       this._element.querySelector('.element__trash').style.display = 'none';
     }

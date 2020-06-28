@@ -3,14 +3,12 @@ export class API {
   constructor({baseUrl}) {
     this._baseUrl = baseUrl;
   }
-
+//приватный фетч запрос
   _fetch(url, params) {
       params.headers = {
         authorization: 'f137b98e-3f11-4f62-a4b2-d83c32e82337',
         'Content-Type': 'application/json'
       };
-      // params.body = JSON.stringify(params.body);
-
     return fetch(this._baseUrl + url, params)
       .then((res) => {
         if(res.ok) {
@@ -21,19 +19,19 @@ export class API {
         console.log(`Ошибка: ${err}`);
       })
   }
-
+  //получаем карточки с сервера
   getInitialCards(url) {
     return this._fetch(url, {
       method: 'GET'
     })
   }
-
+  //получает имя и деятельность автора с сервера
   getUserInterface(url) {
     return this._fetch(url, {
       method: 'GET'
     })
   }
-
+  //отправить инфооацию об аторе на сервер и обновить ее
   sendUserInfo(url, data) {
     return this._fetch(url, {
       method: 'PATCH',
@@ -43,7 +41,7 @@ export class API {
       })
     })
   }
-
+  //отправить карточку на сервер
   sendPlaceCard(url, data) {
     return this._fetch(url, {
       method: 'POST',
@@ -53,19 +51,19 @@ export class API {
       })
     })
   }
-
+  //удалить карточку с сервера
   deleteCard(url) {
     return this._fetch(url, {
       method: 'DELETE'
     })
   }
-
+ //поставить лайк и обновить массив лайков
   putLike(url) {
     return this._fetch(url, {
       method: 'PUT'
       })
   }
-
+  //поменять аватар
   changeAvatar(url, data) {
     return this._fetch(url, {
       method: 'PATCH',
@@ -76,14 +74,3 @@ export class API {
   }
 
 }
-
-
-
-
-// const api = new Api({
-//   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
-//   headers: {
-//     authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
-//     'Content-Type': 'application/json'
-//   }
-// });

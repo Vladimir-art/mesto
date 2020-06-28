@@ -1,5 +1,5 @@
 const content = document.querySelector('.content');
-export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-12';
+export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-12'; //базовый URL
 
 export const editButton = content.querySelector('.profile__button-edit'); //кнопка редактирования
 
@@ -16,33 +16,6 @@ export const elements = '.elements'; //секция с карточками
 
 export const nameInput = document.forms.form.author; //content.querySelector('.popup-container__infoform_author'); //форма с именем автора
 export const jobInput = document.forms.form.job; //content.querySelector('.popup-container__infoform_aboutyourself'); //форма с деятельностью автора
-
-// export const initialCards = [        //массив для добавления карточек мест
-//   {
-//     name: 'Архыз',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: 'https://images.unsplash.com/photo-1587542177509-573b5aeb557f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80'
-//   },
-//   {
-//     name: 'Иваново',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-//   },
-//   {
-//     name: 'Байкал',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-//   }
-// ];
 
 export const formConfig = {
   inputSelector: '.popup-container__infoform', //поле формы

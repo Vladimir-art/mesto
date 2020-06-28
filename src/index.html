@@ -37,9 +37,9 @@
         <form class="popup-container popup-container__author" name="form" method="POST" action="#" novalidate>
           <h2 class="popup-container__text">Редактировать профиль</h2>
           <fieldset class="popup-container__info">
-            <input class="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" type="text"  placeholder="Автор" minlength="2" maxlength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required>
+            <input class="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" value="имя" type="text"  placeholder="Автор" minlength="2" maxlength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required>
             <span class = "popup-container__input-error" id="author-input-error">Вы пропустили это поле.</span>
-            <input class="popup-container__infoform popup-container__infoform_aboutyourself" id="job-input" name="job" type="text"  placeholder="О себе"  minlength="2" maxlength="200" required>
+            <input class="popup-container__infoform popup-container__infoform_aboutyourself" id="job-input" name="job" value="деятельность" type="text"  placeholder="О себе"  minlength="2" maxlength="200" required>
             <span class = "popup-container__input-error" id="job-input-error">Вы пропустили это поле.</span>
             <button class="popup-container__button-add" type="submit">Сохранить</button>
           </fieldset>
