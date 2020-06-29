@@ -1,5 +1,5 @@
 import "./index.css";
-import { API } from "../script/components/API.js";
+import { Api } from "../script/components/Api.js";
 import { Section } from "../script/components/Section.js";
 import { FormValidator } from "../script/components/FormValidator.js";
 import { Card } from "../script/components/Card.js";
@@ -14,6 +14,8 @@ import { editButton,
         popupAvatar,
         addButton,
         avatar,
+        nameInput,
+        jobInput,
         elements,
         formConfig,
         formAuthor,
@@ -22,7 +24,13 @@ import { editButton,
         baseUrl } from "../script/utils/constants.js";
 
 //создаем класс для вызова API
-const api = new API({baseUrl});
+const api = new Api({baseUrl});
+
+function optimisticUx(selector, text) {
+  selector.classList.remove('popup_opened');
+  selector.querySelector('.popup-container__button-add').textContent = text;
+  selector.firstElementChild.reset();
+}
 
 //оверлей для попапов для мыши
 function closePopup(evt) {
@@ -34,14 +42,16 @@ function closePopup(evt) {
 const form = new UserInfo({
   nameSelector: '.profile__author',
   jobSelector: '.profile__specialty',
-  avatar: '.profile__avatar'
-});
+  avatar: '.profile__avatar',
+  inputAuthor: nameInput,
+  inputJob: jobInput
+}, api);
 form.userInterface(); //заносим данные в шапку страницу из сервера
 
 //функция для внесения данных об аторе после редактирования
 const formSubmitHandler = new PopupWithForm({
-  handleFormSubmit: (formData) => {
-    form.setUserInfo(formData); //функция вызывет публичный метод класса UserInfo и отправялет новые данные на сервер
+  handleFormSubmit: (formData, popupSelector, text) => {
+    form.setUserInfo(formData, popupSelector, text); //функция вызывет публичный метод класса UserInfo и отправялет новые данные на сервер
   }
 }, popupEditForm);
 
@@ -57,16 +67,17 @@ const popupImage = new PopupWithImage(popupShowImage); //класс с карт�
 
 //функция создания карточки с местом
 function handlePlace(item) {
-  const card = new Card(item, {//каждая карточка имеет свой id
+  const card = new Card(api, item, {// класс Cаrd принимает экземпляр класса Api из глобал скоуп
     handleCardClick: () => { //Обращается к классу по открытию попапа с картинкой и
       popupImage.open(item.name, item.link); //вызывает метод открытия
     },
     handleCardDelete: (element) => { //подтверждение удаления
       const popupClose = new PopupWithForm({ // создает класс с подтверждением удаления карточки
-        handleFormSubmit: () => {
+        handleFormSubmit: ({}, popupSelector, text) => {
           api.deleteCard(`/cards/${item._id}`)
             .then(() => {
               element.remove();
+              optimisticUx(popupSelector, text);
             })
             .catch((err) => {
               console.log(`Упс, произошла ошибка: ${err}`)
@@ -82,8 +93,8 @@ function handlePlace(item) {
 
 //функция добавления карточек из массива
 const cardList = new Section({
-  renderer: (item, data) => {
-    cardList.prependItem(handlePlace(item, data)); //передает функцию по созданию карточки картинки в конец секции
+  renderer: (item) => {
+    cardList.prependItem(handlePlace(item)); //передает функцию по созданию карточки картинки в конец секции
   }
 }, elements);
 
@@ -93,10 +104,11 @@ api.getInitialCards('/cards').then((arr) => { //получет массив ка
 
 // добавлениe новых карточек
 const formSubmitPlace = new PopupWithForm({
-  handleFormSubmit: (formData) => {//создаю массив из объекта инпутов
+  handleFormSubmit: (formData, popupSelector, text) => {//создаю массив из объекта инпутов
     api.sendPlaceCard('/cards', formData)
       .then((data) => {
         cardList.addItem([data]); //создает карточку
+        optimisticUx(popupSelector, text);
       })
       .catch((err) => {
         console.log(`Упс, произошла ошибка: ${err}`)
@@ -106,10 +118,11 @@ const formSubmitPlace = new PopupWithForm({
 
 //меняем аватар автора
 const formSubmitAvatar = new PopupWithForm({
-  handleFormSubmit: (data) => {
+  handleFormSubmit: (data, popupSelector, text) => {
     api.changeAvatar('/users/me/avatar', data)
     .then((data) => {
       document.querySelector('.profile__avatar').setAttribute('src', data.avatar); //находит элемент в ДОМ и меняет ссылку
+      optimisticUx(popupSelector, text);
     })
     .catch((err) => {
       console.log(`Упс, произошла ошибка: ${err}`)

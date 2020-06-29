@@ -1,5 +1,5 @@
 
-export class API {
+export class Api {
   constructor({baseUrl}) {
     this._baseUrl = baseUrl;
   }
@@ -11,12 +11,11 @@ export class API {
       };
     return fetch(this._baseUrl + url, params)
       .then((res) => {
-        if(res.ok) {
+        if(!res.ok) {
+          return Promise.reject(res.status);
+        } else {
           return res.json();
         }
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
       })
   }
   //получаем карточки с сервера

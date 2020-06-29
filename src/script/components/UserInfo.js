@@ -1,15 +1,12 @@
 //Класс UserInfo отвечает за управление отображением информации о пользователе на странице
-import { nameInput, jobInput, baseUrl, text } from "../utils/constants.js";
-import { API } from "./API.js";
-
 export class UserInfo {
-  constructor({ nameSelector, jobSelector, avatar }) {
+  constructor({ nameSelector, jobSelector, avatar, inputAuthor, inputJob }, api) {
     this._nameSelector = document.querySelector(nameSelector);
     this._jobSelector = document.querySelector(jobSelector);
     this.avatar = document.querySelector(avatar);
-    this._nameInput = nameInput;
-    this._jobInput = jobInput;
-    this._api = new API( {baseUrl} );
+    this._nameInput = inputAuthor;
+    this._jobInput = inputJob;
+    this._api = api;
   }
   //меняем шапку профиля в DOM
   userInterface() {
@@ -19,6 +16,9 @@ export class UserInfo {
         this._jobSelector.textContent = data.about;
         this.avatar.setAttribute('src', `${data.avatar}`);
         this.avatar.id = `${data._id}`;
+      })
+      .catch((err) => {
+        console.log(`Упс, произошла ошибка: ${err}`)
       })
   }
   //возвращает объект с данными пользователя
@@ -31,9 +31,16 @@ export class UserInfo {
     }
   }
   //принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo(form) {
-    this._nameSelector.textContent = form.author;
-    this._jobSelector.textContent = form.job;
-    this._api.sendUserInfo('/users/me', form); //отправием новые данные на сервер
+  setUserInfo(formData, popupSelector, text) {
+    this._api.sendUserInfo('/users/me', formData) //отправием новые данные на сервер
+      .then((data) => {
+        this._nameSelector.textContent = data.name;
+        this._jobSelector.textContent = data.about;
+        popupSelector.classList.remove('popup_opened');
+        popupSelector.querySelector('.popup-container__button-add').textContent = text;
+      })
+      .catch((err) => {
+        console.log(`Упс, произошла ошибка: ${err}`)
+      })
   }
 }

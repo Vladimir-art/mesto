@@ -20,19 +20,13 @@ export class PopupWithForm extends Popup { //наследует класс Popup
     this._popupSelector.addEventListener('submit', (evt) => {
       evt.preventDefault();
       let text = this._popupSelector.querySelector('.popup-container__button-add').textContent; //сохраняем текст кнопки
-      this._popupSelector.querySelector('.popup-container__button-add').textContent = 'Сохранение...'; //меняем текст кнопки в сосент сохранения
-      this._handleFormSubmit(this._getInputValues()); //вызывает метод в index.js
-
-      this.close(); //закрывает попап
-      setTimeout(() => { //ставим в очередь и после сабмита формы возвращаем кнопке первоначальный текст
-        this._popupSelector.querySelector('.popup-container__button-add').textContent = text;
-      }, 1000);
+      this._popupSelector.querySelector('.popup-container__button-add').textContent = 'Сохранение...'; //меняем текст кнопки в момент сохранения
+      this._handleFormSubmit(this._getInputValues(), this._popupSelector, text); //вызывает метод в index.js
     }, {once: true});
   }
 
   close() {
     super.close();
-    this._popupSelector.firstElementChild.reset();
   }
 }
 

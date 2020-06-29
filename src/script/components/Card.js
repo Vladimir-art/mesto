@@ -1,16 +1,17 @@
 import { baseUrl } from "../utils/constants.js";
-import { API } from "./API.js";
+import { Api } from "./API.js";
 
 //функция создания карточки
 export class Card {
-  constructor(item, {handleCardClick, handleCardDelete}, cardSelector) {
+  constructor(api, item, {handleCardClick, handleCardDelete}, cardSelector) {
+    this._api = api;
     this._item = item;
     this._name = item.name; //имя картинки
     this._link = item.link; //ссылка на картинку
     this._handleCardClick = handleCardClick; //функция по открытию попапа с картинкой
     this._handleCardDelete = handleCardDelete; //удалять карточку
     this._cardSelector = document.querySelector(cardSelector);
-    this._api = new API( {baseUrl} );
+    // this._api = new Api( {baseUrl} );
   }
   //находим template элемент на странице и клонируем их
   _getTemplate() {
@@ -46,7 +47,7 @@ export class Card {
   }
   //приватный метод: активный/неактивный лайк
   _handleLikeButton(evt) {
-    if (!(evt.target.classList.contains('element__button_like-active'))) {
+    if (!(evt.target.classList.contains('element__button_like-active'))) { //если кнопка лайка не имеет класса активного лайка, то
       this._api.putLike(`/cards/likes/${this._item._id}`, this._item)
         .then((data) => {
           evt.target.classList.add('element__button_like-active');
