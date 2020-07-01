@@ -1,4 +1,3 @@
-
 export class Api {
   constructor({baseUrl}) {
     this._baseUrl = baseUrl;
