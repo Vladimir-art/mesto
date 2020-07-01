@@ -1,17 +1,13 @@
-import { baseUrl } from "../utils/constants.js";
-import { Api } from "./API.js";
-
 //функция создания карточки
 export class Card {
   constructor(api, item, {handleCardClick, handleCardDelete}, cardSelector) {
-    this._api = api;
+    this._api = api; //принимает экземпляр класса Api
     this._item = item;
     this._name = item.name; //имя картинки
     this._link = item.link; //ссылка на картинку
     this._handleCardClick = handleCardClick; //функция по открытию попапа с картинкой
     this._handleCardDelete = handleCardDelete; //удалять карточку
     this._cardSelector = document.querySelector(cardSelector);
-    // this._api = new Api( {baseUrl} );
   }
   //находим template элемент на странице и клонируем их
   _getTemplate() {
@@ -30,7 +26,6 @@ export class Card {
     this._element.querySelector('.element__image').setAttribute('src', this._link);
     this._element.querySelector('.element__count').textContent = this._item.likes.length; //меняем количество лайков (получаем длину массива)
     this._hiddenButtonTrash();
-    // console.log(this._item);
     return this._element; //возвращает карточку
   }
   //приватный метод: устанавливает слушатели событий
