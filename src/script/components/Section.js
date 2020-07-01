@@ -13,7 +13,7 @@ export class Section {
   }
 
   prependItem(element) {
-    this._containerSelector.append(element);
+    this._containerSelector.prepend(element);
   }
 
 }

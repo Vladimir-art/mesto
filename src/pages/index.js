@@ -113,8 +113,9 @@ const formSubmitPlace = new PopupWithForm({
       .catch((err) => {
         console.log(`Упс, произошла ошибка: ${err}`)
       })
-  }
+    }
 }, popupAddPlace);
+
 
 //меняем аватар автора
 const formSubmitAvatar = new PopupWithForm({

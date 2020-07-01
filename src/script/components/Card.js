@@ -23,9 +23,20 @@ export class Card {
     this._setEventListeners(); //добавляет карточке слушатели событий
     this._isMyLike();
     this._element.querySelector('.element__place').textContent = this._name; //присваивает значения
-    this._element.querySelector('.element__image').setAttribute('src', this._link);
     this._element.querySelector('.element__count').textContent = this._item.likes.length; //меняем количество лайков (получаем длину массива)
     this._hiddenButtonTrash();
+    this._loadImage(this._link)//проверяем картинку на правильность ссылки
+      .then((data) => {//если правильная, то выводит
+        this._element.querySelector('.element__image').setAttribute('src', data.src);
+        this._element.querySelector('.element__place').textContent = this._name;
+    })
+      .catch((err) => { //если нет, задает стандартную картинку и убирает лайки
+        this._element.querySelector('.element__place').textContent = 'Ошибка';
+        this._element.querySelector('.element__image').setAttribute('src', 'https://image.freepik.com/free-vector/404_115790-50.jpg');
+        this._element.querySelector('.element__button').style.display = 'none'; //лайк
+        this._element.querySelector('.element__count').style.display = 'none';//кол-во
+        console.log(`Извините, такой картинки нет... ${err}`);
+      });
     return this._element; //возвращает карточку
   }
   //приватный метод: устанавливает слушатели событий
@@ -71,5 +82,13 @@ export class Card {
       this._element.querySelector('.element__trash').style.display = 'none';
     }
   }
-
+  //проверяет правильность вводимой ссылки (существует ли ссылка на картинку)
+  _loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image(); //Эквивалентно document.createElement ('img').
+      img.addEventListener("load", () => resolve(img));
+      img.addEventListener("error", err => reject(err));
+      img.src = src;
+    });
+  };
 }
