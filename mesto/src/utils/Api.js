@@ -1,6 +1,6 @@
 import React from 'react';
 import { baseUrl } from './utils';
-
+//на данный момент бОльшая часть запросов не функционирует, "работают" только  GET-запросы
 class Api {
   constructor({baseUrl}) {
     this._baseUrl = baseUrl;

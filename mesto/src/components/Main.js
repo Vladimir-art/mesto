@@ -6,20 +6,20 @@ import Card from './Card';
 
 function Main(props) {
 
-  const [userInterface, setUserInterface] = React.useState({});
-  const [cards, setCards] = React.useState([]);
+  const [userInterface, setUserInterface] = React.useState({}); //создаем стейт из информации об авторе (начальные значения - пустой объект)
+  const [cards, setCards] = React.useState([]);//создает стейт из пустого массива (в нем будет хранится массив карточек)
 
   React.useEffect(() => {
-    api.getUserInterface('/users/me')
+    api.getUserInterface('/users/me') //отправляем запрос на сервер и получаем инфу об авторе
       .then((data) => {
-        setUserInterface(data);
+        setUserInterface(data); //меняем стейт userInterface
       })
       .catch((err) => {
         console.log(`Упс, произошла ошибка: ${err}`);
       });
-    api.getInitialCards('/cards')
+    api.getInitialCards('/cards') //отправляем запрос на сервер и получаем массив карточек
       .then((array) => {
-        setCards(array);
+        setCards(array); //меняем стейт cards
       })
       .catch((err) => {
         console.log(`Упс, произошла ошибка: ${err}`);
@@ -32,27 +32,28 @@ function Main(props) {
           <section className="profile">
             <div className="profile__cover">
               <div className="profile__information">
-                <figure className="profile__background" onClick={props.onEditAvatar}></figure>
+                <figure className="profile__background" onClick={props.onEditAvatar}></figure> {/*при клике на аву меняем стейт на true и передем в компонент App*/}
                 <img className="profile__avatar" src={userInterface.avatar} alt="Жак-Ив Кусто"/>
               </div>
               <div className="profile__info">
                 <div className="profile__reg">
                   <h1 className="profile__author">{userInterface.name}</h1>
-                  <button className="profile__button-edit" type="button" onClick={props.onEditProfile}></button>
+                  <button className="profile__button-edit" type="button" onClick={props.onEditProfile}></button> {/*при клике на редактор инфы меняем стейт на true и передем в компонент App*/}
                 </div>
                 <p className="profile__specialty">{userInterface.about}</p>
               </div>
             </div>
-            <button className="profile__button-add" type="button" onClick={props.onAddPlace}></button>
+            <button className="profile__button-add" type="button" onClick={props.onAddPlace}></button> {/*при клике на + меняем стейт на true и передем в компонент App*/}
           </section>
 
-          <section className="elements">
-            {cards.map((item) => {
+          <section className="elements"> {/*передаем в Card информацию о каждой карточке, приcваиваем каждой карточке key и передаем ф-цию по смене флага при нажатии на картинку*/}
+            {cards.map((item, index) => {
               return(
-                <Card card={item} key={item._id} onCardClick={props.onCardClick}/>
+                <Card card={item} key={index} onCardClick={props.onCardClick}/>
               );
             })}
           </section>
+          {/*в каждом компоненте PopupWithForm передаем пропс isOpen, который есть условие того что конкретное поле объекта true и если оно верно, передаем новый класс по открытию формы*/}
           <PopupWithForm title="Редактировать профиль" name="edit-form" add="Сохранить" isOpen={props.isOpen.editProfilePopup && 'popup_opened'} onClose={props.onClose} children={
             <>
               <input className="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" defaultValue="имя" type="text"  placeholder="Автор" minLength="2" maxLength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required/>
@@ -76,6 +77,7 @@ function Main(props) {
             </>
           } />
           <PopupWithForm title="Вы уверены?" name="verification" add="Да" />
+          {/*в ImagePopup передаем объект о нажатой карточке (card), условие как в PopupWithForm и ф-цию по смене стейта по нажатию на крестик*/}
           <ImagePopup card={props.cardInfo} isOpen={props.isOpen.imagePopup && 'popup_opened'} onClose={props.onClose}/>
 
       </main>

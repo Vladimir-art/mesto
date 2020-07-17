@@ -5,10 +5,11 @@ function Card(props) {
   function handleClick() {
     props.onCardClick(props.card);
   }
+
   return (
     <>
       <div className="element">
-        <img className="element__image" alt="Изображение" src={props.card.link} onClick={handleClick} />
+        <img className="element__image" alt="Изображение" src={props.card.link} onClick={handleClick} /> {/*при клике вызывает ф-цию по смене стейта и передает данные о карточке в App*/}
         <div className="element__places">
           <h2 className="element__place">{props.card.name}</h2>
           <div className="element__likes">
