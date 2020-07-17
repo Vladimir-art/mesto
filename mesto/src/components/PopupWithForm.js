@@ -11,7 +11,7 @@ function PopupWithForm(props) {
             {props.children}
             <button className="popup-container__button-add" type="submit">{props.add}</button>
           </fieldset>
-          <button className="popup-container__button-reset" type="reset" aria-label="Close"></button>
+          <button className="popup-container__button-reset" type="reset" aria-label="Close" onClick={props.onClose}></button>
         </form>
       </section>
     </>

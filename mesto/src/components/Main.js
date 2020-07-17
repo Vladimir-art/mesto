@@ -3,7 +3,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 function Main(props) {
-  console.log(props.isOpen);
+  // console.log(props.isOpen, props.onClose);
 
   return (
     <>
@@ -27,7 +27,7 @@ function Main(props) {
 
           <section className="elements">
           </section>
-          <PopupWithForm title="Редактировать профиль" name="edit-form" add="Сохранить" isOpen={props.isOpen.editProfilePopup && 'popup_opened'} children={
+          <PopupWithForm title="Редактировать профиль" name="edit-form" add="Сохранить" isOpen={props.isOpen.editProfilePopup && 'popup_opened'} onClose={props.onClose} children={
             <>
               <input className="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" value="имя" type="text"  placeholder="Автор" minLength="2" maxLength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required/>
               <span className = "popup-container__input-error" id="author-input-error">Вы пропустили это поле.</span>
@@ -35,7 +35,7 @@ function Main(props) {
               <span className = "popup-container__input-error" id="job-input-error">Вы пропустили это поле.</span>
             </>
           } />
-          <PopupWithForm title="Новое место" name="add-place" add="Создать" isOpen={props.isOpen.addPlacePopup && 'popup_opened'} children={
+          <PopupWithForm title="Новое место" name="add-place" add="Создать" isOpen={props.isOpen.addPlacePopup && 'popup_opened'} onClose={props.onClose} children={
             <>
               <input className="popup-container__infoform popup-container__infoform_place-name" id="place-input" name="name" type="text" placeholder="Название" minLength="1" maxLength="30"  required/>
               <span className = "popup-container__input-error" id="place-input-error">Вы пропустили это поле.</span>
@@ -43,7 +43,7 @@ function Main(props) {
               <span className = "popup-container__input-error" id="link-input-error"></span>
             </>
           } />
-          <PopupWithForm title="Обновить аватар" name="avatar" add="Сохранить" isOpen={props.isOpen.editAvatarPopup && 'popup_opened'} children={
+          <PopupWithForm title="Обновить аватар" name="avatar" add="Сохранить" isOpen={props.isOpen.editAvatarPopup && 'popup_opened'} onClose={props.onClose} children={
             <>
               <input className="popup-container__infoform popup-container__infoform_avatar-link" id="avatar-input" name="avatar" type="url" placeholder="Введите ссылку" required/>
               <span className = "popup-container__input-error" id="avatar-input-error"></span>
