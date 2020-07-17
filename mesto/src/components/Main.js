@@ -2,19 +2,29 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { api } from '../utils/Api';
+import Card from './Card';
 
 function Main(props) {
 
   const [userInterface, setUserInterface] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getUserInterface('/users/me')
       .then((data) => {
         setUserInterface(data);
       })
+      .catch((err) => {
+        console.log(`Упс, произошла ошибка: ${err}`);
+      });
+    api.getInitialCards('/cards')
+      .then((array) => {
+        setCards(array);
+      })
+      .catch((err) => {
+        console.log(`Упс, произошла ошибка: ${err}`);
+      });
   }, []);
-
-  // console.log(userName.name);
 
   return (
     <>
@@ -37,12 +47,17 @@ function Main(props) {
           </section>
 
           <section className="elements">
+            {cards.map((item) => {
+              return(
+                <Card card={item} key={item._id} onCardClick={props.onCardClick}/>
+              );
+            })}
           </section>
           <PopupWithForm title="Редактировать профиль" name="edit-form" add="Сохранить" isOpen={props.isOpen.editProfilePopup && 'popup_opened'} onClose={props.onClose} children={
             <>
-              <input className="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" value="имя" type="text"  placeholder="Автор" minLength="2" maxLength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required/>
+              <input className="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" defaultValue="имя" type="text"  placeholder="Автор" minLength="2" maxLength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required/>
               <span className = "popup-container__input-error" id="author-input-error">Вы пропустили это поле.</span>
-              <input className="popup-container__infoform popup-container__infoform_aboutyourself" id="job-input" name="job" value="деятельность" type="text"  placeholder="О себе"  minLength="2" maxLength="200" required/>
+              <input className="popup-container__infoform popup-container__infoform_aboutyourself" id="job-input" name="job" defaultValue="деятельность" type="text"  placeholder="О себе"  minLength="2" maxLength="200" required/>
               <span className = "popup-container__input-error" id="job-input-error">Вы пропустили это поле.</span>
             </>
           } />
@@ -61,7 +76,7 @@ function Main(props) {
             </>
           } />
           <PopupWithForm title="Вы уверены?" name="verification" add="Да" />
-          <ImagePopup />
+          <ImagePopup card={props.cardInfo} isOpen={props.isOpen.imagePopup && 'popup_opened'} onClose={props.onClose}/>
 
       </main>
     </>

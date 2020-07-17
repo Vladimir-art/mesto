@@ -1,5 +1,5 @@
 import React from 'react';
-import { baseUrl } from './constants';
+import { baseUrl } from './utils';
 
 class Api {
   constructor({baseUrl}) {
