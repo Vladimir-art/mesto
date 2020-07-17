@@ -1,9 +1,20 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import { api } from '../utils/Api';
 
 function Main(props) {
-  // console.log(props.isOpen, props.onClose);
+
+  const [userInterface, setUserInterface] = React.useState({});
+
+  React.useEffect(() => {
+    api.getUserInterface('/users/me')
+      .then((data) => {
+        setUserInterface(data);
+      })
+  }, []);
+
+  // console.log(userName.name);
 
   return (
     <>
@@ -12,14 +23,14 @@ function Main(props) {
             <div className="profile__cover">
               <div className="profile__information">
                 <figure className="profile__background" onClick={props.onEditAvatar}></figure>
-                <img className="profile__avatar" alt="Жак-Ив Кусто"/>
+                <img className="profile__avatar" src={userInterface.avatar} alt="Жак-Ив Кусто"/>
               </div>
               <div className="profile__info">
                 <div className="profile__reg">
-                  <h1 className="profile__author">Жак-Ив Кусто</h1>
+                  <h1 className="profile__author">{userInterface.name}</h1>
                   <button className="profile__button-edit" type="button" onClick={props.onEditProfile}></button>
                 </div>
-                <p className="profile__specialty">Исследователь океана</p>
+                <p className="profile__specialty">{userInterface.about}</p>
               </div>
             </div>
             <button className="profile__button-add" type="button" onClick={props.onAddPlace}></button>
