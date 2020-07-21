@@ -3,7 +3,7 @@ import React from 'react';
 function ImagePopup(props) {
   return (
     <>
-      <section className={`popup popup__show-image ${props.isOpen}`}>
+      <section className={`popup popup__show-image ${props.isOpen && 'popup_opened'}`}>
         <figure className="popup-image">
           <img className="popup-image__picture" src={props.card.link} alt="Изображение места"/>
           <figcaption className="popup-image__caption">{props.card.name}</figcaption>

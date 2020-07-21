@@ -1,6 +1,4 @@
 import React from 'react';
-import PopupWithForm from './PopupWithForm';
-import ImagePopup from './ImagePopup';
 import { api } from '../utils/Api';
 import Card from './Card';
 
@@ -53,33 +51,6 @@ function Main(props) {
               );
             })}
           </section>
-          {/*в каждом компоненте PopupWithForm передаем пропс isOpen, который есть условие того что конкретное поле объекта true и если оно верно, передаем новый класс по открытию формы*/}
-          <PopupWithForm title="Редактировать профиль" name="edit-form" add="Сохранить" isOpen={props.isOpen.editProfilePopup && 'popup_opened'} onClose={props.onClose} children={
-            <>
-              <input className="popup-container__infoform popup-container__infoform_author" id="author-input" name="author" defaultValue="имя" type="text"  placeholder="Автор" minLength="2" maxLength="40" pattern="[A-Za-zА-ЯЁа-яё -]{1,}" required/>
-              <span className = "popup-container__input-error" id="author-input-error">Вы пропустили это поле.</span>
-              <input className="popup-container__infoform popup-container__infoform_aboutyourself" id="job-input" name="job" defaultValue="деятельность" type="text"  placeholder="О себе"  minLength="2" maxLength="200" required/>
-              <span className = "popup-container__input-error" id="job-input-error">Вы пропустили это поле.</span>
-            </>
-          } />
-          <PopupWithForm title="Новое место" name="add-place" add="Создать" isOpen={props.isOpen.addPlacePopup && 'popup_opened'} onClose={props.onClose} children={
-            <>
-              <input className="popup-container__infoform popup-container__infoform_place-name" id="place-input" name="name" type="text" placeholder="Название" minLength="1" maxLength="30"  required/>
-              <span className = "popup-container__input-error" id="place-input-error">Вы пропустили это поле.</span>
-              <input className="popup-container__infoform popup-container__infoform_place-link" id="link-input" name="link" type="url" placeholder="Ссылка на картинку" required/>
-              <span className = "popup-container__input-error" id="link-input-error"></span>
-            </>
-          } />
-          <PopupWithForm title="Обновить аватар" name="avatar" add="Сохранить" isOpen={props.isOpen.editAvatarPopup && 'popup_opened'} onClose={props.onClose} children={
-            <>
-              <input className="popup-container__infoform popup-container__infoform_avatar-link" id="avatar-input" name="avatar" type="url" placeholder="Введите ссылку" required/>
-              <span className = "popup-container__input-error" id="avatar-input-error"></span>
-            </>
-          } />
-          <PopupWithForm title="Вы уверены?" name="verification" add="Да" />
-          {/*в ImagePopup передаем объект о нажатой карточке (card), условие как в PopupWithForm и ф-цию по смене стейта по нажатию на крестик*/}
-          <ImagePopup card={props.cardInfo} isOpen={props.isOpen.imagePopup && 'popup_opened'} onClose={props.onClose}/>
-
       </main>
     </>
   )
