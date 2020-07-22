@@ -41,4 +41,4 @@
 vl.ermolaevv@yandex.ru Владимир Ермолаев.
 
 #### Сайт
- https://vladimir-art.github.io/mesto/index.html
+  https://vladimir-art.github.io/mesto
