@@ -6,12 +6,8 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server --open --watch",
-    "predeploy": "npm run build",
+    "predeploy": "npm run-script build",
     "deploy": "gh-pages -d dist"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Vladimir-art/mesto.git"
   },
   "author": "Vladimir Ermolaev",
   "license": "ISC",
